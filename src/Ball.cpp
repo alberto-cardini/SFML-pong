@@ -5,8 +5,6 @@
 #include "Game.hpp"
 
 Ball::Ball() : circle(10.f), speed(5), bSprite(bTexture) {
-    if(!bTexture.loadFromFile("textures/paper.jpg"))
-        perror("Wrong working directory");
 
     circle.setOrigin(10.f, 10.f);
     circle.setPosition(400.f, 300.f);
