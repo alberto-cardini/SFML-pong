@@ -13,7 +13,7 @@ Game::Game() : window(sf::VideoMode(800, 600), "Pong"),
 
     window.setFramerateLimit(60);
 
-    if(!font.loadFromFile("textures/OpenSans-Bold.ttf"))
+    if(!font.loadFromFile("font/OpenSans-Regular.ttf"))
         perror("File not found");
     HUD.setFont(font);
     HUD.setPosition(100, 50);
