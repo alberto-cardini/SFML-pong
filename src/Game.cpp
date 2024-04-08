@@ -23,6 +23,9 @@ Game::Game() : window(sf::VideoMode(800, 600), "Pong"),
     border.setFillColor(sf::Color(0,0,0,0));
     border.setOutlineThickness(5.f);
 
+    player = User();
+    ball = Ball();
+
 }
 
 void Game::render(){
@@ -37,7 +40,7 @@ void Game::render(){
 }
 
 void Game::update() {
-    ball.getShape().move(ball.getDirection().x,0);
+    ball.move();
     hit();
 }
 
@@ -76,10 +79,6 @@ void Game::eventManager(){
 }
 
 void Game::run(){
-
-    player = User();
-    ball = Ball();
-
     while(window.isOpen()){
         eventManager();
         update();

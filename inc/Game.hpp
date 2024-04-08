@@ -19,7 +19,6 @@ public:
     void run();
 
     bool hit();
-    void move();
 
 private:
     User player;

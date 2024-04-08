@@ -23,3 +23,6 @@ void Ball::setDirection(float x, float y) { this->direction.x = x; this->directi
 
 void Ball::setSpeed(float s) { this->speed = s; }
 
+void Ball::move() {
+    circle.move(direction.x,0);
+}

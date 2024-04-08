@@ -19,7 +19,7 @@ public:
     void setDirection(float x, float y);
     void setSpeed(float s);
 
-    //void move();
+    void move();
 
 private:
 
