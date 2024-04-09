@@ -39,7 +39,6 @@ Game::Game() : window(sf::VideoMode(800, 600), "Pong", sf::Style::Close) {
 
     //Entities
     player = User();
-    player.getShape().setFillColor(sf::Color::Green);
     ball = Ball();
 
     //Time
@@ -88,13 +87,15 @@ void Game::eventManager(){
                 switch (event.key.scancode) {
 
                     case sf::Keyboard::Scan::Down:
-                        if(player.getShape().getPosition().y < minHeight)
+                        if(player.getShape().getPosition().y + 20 < minHeight)
                             player.getShape().move(0,20);
+                        std::cout << player.getShape().getPosition().y << std::endl;
                         break;
 
                     case sf::Keyboard::Scan::Up:
-                        if(player.getShape().getPosition().y > maxHeight)
+                        if(player.getShape().getPosition().y - 20 > maxHeight)
                             player.getShape().move(0, -20);
+                        std::cout << player.getShape().getPosition().y << std::endl;
                         break;
 
                     default:
