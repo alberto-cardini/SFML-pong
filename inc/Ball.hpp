@@ -13,7 +13,6 @@ public:
     Ball();
 
     sf::Vector2f getVelocity() const ;
-    float getSpeed() const;
     sf::CircleShape& getShape();
 
     void setVelocity(sf::Vector2f dir);
