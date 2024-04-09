@@ -4,4 +4,4 @@ out
 .idea
 .vs
 .vscode
-cmake-build*/
+cmake-build-debug/
