@@ -4,13 +4,21 @@
 #include "iostream"
 #include "Game.hpp"
 
-Ball::Ball() : circle(10.f), speed(5), bSprite(bTexture) {
+Ball::Ball() : circle(10.f), speed(200) {
 
     circle.setOrigin(10.f, 10.f);
     circle.setPosition(400.f, 300.f);
 
     direction.x = -1;
     direction.y = 1;
+
+    /* eventual implementation
+    if(!ballTexture.loadFromFile("font/basket-ball.png")){
+        perror("Wrong working directory");
+    }
+
+    circle.setTexture(&ballTexture);
+     */
 }
 
 sf::Vector2f Ball::getDirection() const { return this->direction; }
@@ -23,6 +31,6 @@ void Ball::setDirection(float x, float y) { this->direction.x = x; this->directi
 
 void Ball::setSpeed(float s) { this->speed = s; }
 
-void Ball::move() {
-    circle.move(direction.x,0);
+void Ball::move(sf::Time dt) {
+    circle.move(direction.x * speed * dt.asSeconds(),0);
 }

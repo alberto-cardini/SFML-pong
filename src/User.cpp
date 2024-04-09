@@ -23,10 +23,9 @@ User::User() : platform(sf::Vector2f(5.f, 100.f)) {
 
 sf::Vector2f User::getPos() const { return this->getPosition(); }
 
-sf::Sprite& User::getSprite() { return this->pSprite; }
+const sf::Sprite& User::getSprite() const { return this->pSprite; }
 
-//sf::VertexArray& User::getShape() { return platform; }
-sf::RectangleShape & User::getShape() { return platform; }
+sf::RectangleShape& User::getShape() { return platform; }
 
 void User::setPos(float x, float y) { this->setPosition(x, y); }
 

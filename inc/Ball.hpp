@@ -19,21 +19,21 @@ public:
     void setDirection(float x, float y);
     void setSpeed(float s);
 
-    void move();
+    void move(sf::Time dt);
+
+    sf::Texture ballTexture;
 
 private:
 
     float speed;
-
     sf::Vector2f direction;
-    sf::Texture bTexture;
     sf::Sprite bSprite;
     sf::CircleShape circle;
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
     {
         states.transform *= getTransform();
-        states.texture = &bTexture;
+        states.texture = &ballTexture;
         target.draw(circle, states);
     }
 

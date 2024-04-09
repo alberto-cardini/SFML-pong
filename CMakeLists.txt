@@ -25,6 +25,8 @@ set(INCLUDE_FILE
         inc/Game.hpp
         inc/Ball.hpp
         inc/User.hpp
+        inc/HUD.hpp
+        src/HUD.cpp
 
 )
 

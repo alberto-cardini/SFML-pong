@@ -14,9 +14,9 @@ public:
     User();
 
     sf::Vector2f getPos() const ;
-    sf::Sprite& getSprite();
+    const sf::Sprite& getSprite() const ;
     //sf::VertexArray& getShape();
-    sf::RectangleShape & getShape();
+    sf::RectangleShape & getShape() ; //do not return const ref. due to move() call in Game.cpp
 
     void setSpritePos(float x, float y);
     void setPlatformPos(float x, float y);
