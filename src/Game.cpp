@@ -39,7 +39,7 @@ Game::Game() : window(sf::VideoMode(800, 600), "Pong", sf::Style::Close) {
 
     //Entities
     player = User();
-    player.getShape().setFillColor(sf::Color::Red);
+    player.getShape().setFillColor(sf::Color::Green);
     ball = Ball();
 
     //Time
@@ -67,6 +67,11 @@ void Game::render(){
 void Game::update() {
     ball.move(deltaTime);
     hit();
+}
+
+void Game::restart(){
+    score = 0;
+    ball.getShape().setPosition(400, 300);
 }
 
 void Game::eventManager(){
@@ -112,27 +117,21 @@ void Game::run(){
     }
 }
 
-void Game::hit(){
-    sf::FloatRect area;
+void Game::hit(){  // remember that the y-axis is flipped, down is positive and up negative. x-axis is OK
     if(ball.getShape().getGlobalBounds().intersects(player.getShape().getGlobalBounds())){
-        ball.setDirection(ball.getDirection().x * (-1), 0);
+        ball.setVelocity(ball.getVelocity().x * (-1), ball.getVelocity().y * (1));
         score++;
     }
-    if(ball.getShape().getGlobalBounds().intersects(top.getGlobalBounds(), area)){
-        std::cout << ball.getPosition().x << std::endl;
-        ball.setDirection(ball.getDirection().x * (-1), 0);
+    if(ball.getShape().getGlobalBounds().intersects(top.getGlobalBounds())){
+        ball.setVelocity(ball.getVelocity().x * (1), ball.getVelocity().y * (-1));
     }
-    if(ball.getShape().getGlobalBounds().intersects(bot.getGlobalBounds(), area)){
-        std::cout << ball.getPosition().x << std::endl;
-        ball.setDirection(ball.getDirection().x * (-1), 0);
+    if(ball.getShape().getGlobalBounds().intersects(bot.getGlobalBounds())){
+        ball.setVelocity(ball.getVelocity().x * (1), ball.getVelocity().y * (-1));
     }
-    if(ball.getShape().getGlobalBounds().intersects(left.getGlobalBounds(), area)){
-        std::cout << ball.getPosition().x << std::endl;
-        ball.setDirection(ball.getDirection().x * (-1), 0);
-        score--;
+    if(ball.getShape().getGlobalBounds().intersects(left.getGlobalBounds())){
+        restart();
     }
-    if(ball.getShape().getGlobalBounds().intersects(right.getGlobalBounds(), area)){
-        std::cout << ball.getPosition().x << std::endl;
-        ball.setDirection(ball.getDirection().x * (-1), 0);
+    if(ball.getShape().getGlobalBounds().intersects(right.getGlobalBounds())){
+        ball.setVelocity(ball.getVelocity().x * (-1), ball.getVelocity().y * (1));
     }
 }

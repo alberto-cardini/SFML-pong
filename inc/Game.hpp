@@ -18,6 +18,7 @@ public:
     void update();
     void eventManager();
     void run();
+    void restart();
 
     void hit();
 

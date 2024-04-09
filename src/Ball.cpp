@@ -4,33 +4,25 @@
 #include "iostream"
 #include "Game.hpp"
 
-Ball::Ball() : circle(10.f), speed(200) {
+Ball::Ball() : circle(10.f) {
 
     circle.setOrigin(10.f, 10.f);
     circle.setPosition(400.f, 300.f);
 
-    direction.x = -1;
-    direction.y = 1;
+    velocity.x = -200;
+    velocity.y = 100;
 
-    /* eventual implementation
-    if(!ballTexture.loadFromFile("font/basket-ball.png")){
-        perror("Wrong working directory");
-    }
-
-    circle.setTexture(&ballTexture);
-     */
 }
 
-sf::Vector2f Ball::getDirection() const { return this->direction; }
+sf::Vector2f Ball::getVelocity() const { return this->velocity; }
 sf::CircleShape& Ball::getShape() { return this->circle; }
 
-float Ball::getSpeed() const { return this->speed; }
+float Ball::getSpeed() const { return sqrt(velocity.x * velocity.x + velocity.y * velocity.y); }
 
-void Ball::setDirection(sf::Vector2f dir) { this->direction = dir; }
-void Ball::setDirection(float x, float y) { this->direction.x = x; this->direction.y = y; }
-
-void Ball::setSpeed(float s) { this->speed = s; }
+void Ball::setVelocity(sf::Vector2f dir) { this->velocity = dir; }
+void Ball::setVelocity(float x, float y) { this->velocity.x = x; this->velocity.y = y; }
 
 void Ball::move(sf::Time dt) {
-    circle.move(direction.x * speed * dt.asSeconds(),0);
+    circle.move(velocity.x * dt.asSeconds(),velocity.y * dt.asSeconds());
 }
+

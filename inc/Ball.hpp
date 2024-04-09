@@ -9,31 +9,26 @@
 
 class Ball : public sf::Drawable, public sf::Transformable {
 public:
+
     Ball();
 
-    sf::Vector2f getDirection() const ;
+    sf::Vector2f getVelocity() const ;
     float getSpeed() const;
     sf::CircleShape& getShape();
 
-    void setDirection(sf::Vector2f dir);
-    void setDirection(float x, float y);
-    void setSpeed(float s);
+    void setVelocity(sf::Vector2f dir);
+    void setVelocity(float x, float y);
 
     void move(sf::Time dt);
 
-    sf::Texture ballTexture;
-
 private:
 
-    float speed;
-    sf::Vector2f direction;
-    sf::Sprite bSprite;
+    sf::Vector2f velocity;
     sf::CircleShape circle;
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
     {
         states.transform *= getTransform();
-        states.texture = &ballTexture;
         target.draw(circle, states);
     }
 

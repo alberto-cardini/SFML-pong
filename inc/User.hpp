@@ -13,27 +13,17 @@ class User : public sf::Drawable, public sf::Transformable {
 public:
     User();
 
-    sf::Vector2f getPos() const ;
-    const sf::Sprite& getSprite() const ;
-    //sf::VertexArray& getShape();
     sf::RectangleShape & getShape() ; //do not return const ref. due to move() call in Game.cpp
 
-    void setSpritePos(float x, float y);
     void setPlatformPos(float x, float y);
-
-    void setPos(float x, float y);
 
 private:
 
-    sf::Texture pTexture;
-    sf::Sprite pSprite;
-    //sf::VertexArray platform;
     sf::RectangleShape platform;
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
     {
         states.transform *= getTransform();
-        states.texture = &pTexture;
         target.draw(platform, states);
     }
 
