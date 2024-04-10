@@ -13,7 +13,12 @@ public:
     Ball();
 
     sf::Vector2f getVelocity() const ;
-    sf::CircleShape& getShape();
+
+    void setPosition(float x, float y) { circle.setPosition(x,y); }
+
+    const sf::FloatRect getGlobalBounds() const {
+        return getTransform().transformRect(circle.getGlobalBounds());
+    }
 
     void setVelocity(sf::Vector2f dir);
     void setVelocity(float x, float y);

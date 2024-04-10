@@ -70,7 +70,8 @@ void Game::update() {
 
 void Game::restart(){
     score = 0;
-    ball.getShape().setPosition(400, 300);
+    ball.setPosition(400, 300);
+    ball.setVelocity(ball.getVelocity().x * (-1 * rand() % ));
 }
 
 void Game::eventManager(){
@@ -119,20 +120,20 @@ void Game::run(){
 }
 
 void Game::hit(){  // remember that the y-axis is flipped, down is positive and up negative. x-axis is OK
-    if(ball.getShape().getGlobalBounds().intersects(player.getGlobalBounds())){
+    if(ball.getGlobalBounds().intersects(player.getGlobalBounds())){
         ball.setVelocity(ball.getVelocity().x * (-1), ball.getVelocity().y * (1));
         score++;
     }
-    if(ball.getShape().getGlobalBounds().intersects(top.getGlobalBounds())){
+    if(ball.getGlobalBounds().intersects(top.getGlobalBounds())){
         ball.setVelocity(ball.getVelocity().x * (1), ball.getVelocity().y * (-1));
     }
-    if(ball.getShape().getGlobalBounds().intersects(bot.getGlobalBounds())){
+    if(ball.getGlobalBounds().intersects(bot.getGlobalBounds())){
         ball.setVelocity(ball.getVelocity().x * (1), ball.getVelocity().y * (-1));
     }
-    if(ball.getShape().getGlobalBounds().intersects(left.getGlobalBounds())){
+    if(ball.getGlobalBounds().intersects(left.getGlobalBounds())){
         restart();
     }
-    if(ball.getShape().getGlobalBounds().intersects(right.getGlobalBounds())){
+    if(ball.getGlobalBounds().intersects(right.getGlobalBounds())){
         ball.setVelocity(ball.getVelocity().x * (-1), ball.getVelocity().y * (1));
     }
 }

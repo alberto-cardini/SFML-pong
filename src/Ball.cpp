@@ -6,8 +6,8 @@
 
 Ball::Ball() : circle(10.f) {
 
-    circle.setOrigin(10.f, 10.f);
-    circle.setPosition(400.f, 300.f);
+    setOrigin(10.f, 10.f);
+    setPosition(400.f, 300.f);
 
     velocity.x = -200;
     velocity.y = 100;
@@ -15,7 +15,6 @@ Ball::Ball() : circle(10.f) {
 }
 
 sf::Vector2f Ball::getVelocity() const { return this->velocity; }
-sf::CircleShape& Ball::getShape() { return this->circle; }
 
 void Ball::setVelocity(sf::Vector2f dir) { this->velocity = dir; }
 void Ball::setVelocity(float x, float y) { this->velocity.x = x; this->velocity.y = y; }
