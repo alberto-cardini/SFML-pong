@@ -87,15 +87,15 @@ void Game::eventManager(){
                 switch (event.key.scancode) {
 
                     case sf::Keyboard::Scan::Down:
-                        if(player.getShape().getPosition().y + 20 < minHeight)
-                            player.getShape().move(0,20);
-                        std::cout << player.getShape().getPosition().y << std::endl;
+                        if(player.getPosition().y + 20 < minHeight)
+                            player.move(0,20);
+                        std::cout << player.getPosition().y << std::endl;
                         break;
 
                     case sf::Keyboard::Scan::Up:
-                        if(player.getShape().getPosition().y - 20 > maxHeight)
-                            player.getShape().move(0, -20);
-                        std::cout << player.getShape().getPosition().y << std::endl;
+                        if(player.getPosition().y - 20 > maxHeight)
+                            player.move(0, -20);
+                        std::cout << player.getPosition().y << std::endl;
                         break;
 
                     default:
@@ -119,7 +119,7 @@ void Game::run(){
 }
 
 void Game::hit(){  // remember that the y-axis is flipped, down is positive and up negative. x-axis is OK
-    if(ball.getShape().getGlobalBounds().intersects(player.getShape().getGlobalBounds())){
+    if(ball.getShape().getGlobalBounds().intersects(player.getGlobalBounds())){
         ball.setVelocity(ball.getVelocity().x * (-1), ball.getVelocity().y * (1));
         score++;
     }
