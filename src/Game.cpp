@@ -71,7 +71,6 @@ void Game::update() {
 void Game::restart(){
     score = 0;
     ball.setPosition(400, 300);
-    ball.setVelocity(ball.getVelocity().x * (-1 * rand() % ));
 }
 
 void Game::eventManager(){
