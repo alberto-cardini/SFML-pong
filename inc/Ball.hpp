@@ -14,9 +14,9 @@ public:
 
     sf::Vector2f getVelocity() const ;
 
-    void setPosition(float x, float y) { circle.setPosition(x,y); }
+    void setPosition(float x, float y) override { circle.setPosition(x,y); }
 
-    const sf::FloatRect getGlobalBounds() const {
+    sf::FloatRect getGlobalBounds() const {
         return getTransform().transformRect(circle.getGlobalBounds());
     }
 
