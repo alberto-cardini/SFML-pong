@@ -18,6 +18,8 @@ set(SOURCE_FILE
         src/Game.cpp
         src/User.cpp
         src/Ball.cpp
+        src/Obstacles.cpp
+
 )
 
 set(INCLUDE_FILE
@@ -25,6 +27,7 @@ set(INCLUDE_FILE
         inc/Game.hpp
         inc/Ball.hpp
         inc/User.hpp
+        inc/Obstacles.hpp
 
 )
 

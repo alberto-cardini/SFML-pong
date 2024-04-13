@@ -4,6 +4,7 @@
 #include "Game.hpp"
 #include <iostream>
 
+bool spawn = false;
 int Game::score = 0;
 float Game::maxHeight = 150;  //counting 0 form the top
 float Game::minHeight = 450;
@@ -60,6 +61,8 @@ void Game::render(){
     window.draw(scoreText);
     window.draw(ball);
     window.draw(player);
+    for(const Obstacle& n : obs)
+        window.draw(n);
     window.display();
 }
 
@@ -89,13 +92,11 @@ void Game::eventManager(){
                     case sf::Keyboard::Scan::Down:
                         if(player.getPosition().y + 20 < minHeight)
                             player.move(0,20);
-                        std::cout << player.getPosition().y << std::endl;
                         break;
 
                     case sf::Keyboard::Scan::Up:
                         if(player.getPosition().y - 20 > maxHeight)
                             player.move(0, -20);
-                        std::cout << player.getPosition().y << std::endl;
                         break;
 
                     default:
@@ -119,20 +120,28 @@ void Game::run(){
 }
 
 void Game::hit(){  // remember that the y-axis is flipped, down is positive and up negative. x-axis is OK
-    if(ball.getGlobalBounds().intersects(player.getGlobalBounds())){
+
+    for (Obstacle n : ) {
+
+    }
+
+    if (ball.getGlobalBounds().intersects(player.getGlobalBounds())){
         ball.setVelocity(ball.getVelocity().x * (-1), ball.getVelocity().y * (1));
         score++;
+        Obstacle newObs;
+        obs.push_back(newObs);
     }
-    if(ball.getGlobalBounds().intersects(top.getGlobalBounds())){
+    if (ball.getGlobalBounds().intersects(top.getGlobalBounds())){
         ball.setVelocity(ball.getVelocity().x * (1), ball.getVelocity().y * (-1));
     }
-    if(ball.getGlobalBounds().intersects(bot.getGlobalBounds())){
+    if (ball.getGlobalBounds().intersects(bot.getGlobalBounds())){
         ball.setVelocity(ball.getVelocity().x * (1), ball.getVelocity().y * (-1));
     }
-    if(ball.getGlobalBounds().intersects(left.getGlobalBounds())){
+    if (ball.getGlobalBounds().intersects(left.getGlobalBounds())){
         restart();
     }
-    if(ball.getGlobalBounds().intersects(right.getGlobalBounds())){
+    if (ball.getGlobalBounds().intersects(right.getGlobalBounds())){
         ball.setVelocity(ball.getVelocity().x * (-1), ball.getVelocity().y * (1));
     }
 }
+

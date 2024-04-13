@@ -1,7 +1,6 @@
 //
 // Created by Alberto Cardini on 04/04/24.
 //
-#include "iostream"
 #include "Game.hpp"
 
 Ball::Ball() : circle(10.f) {

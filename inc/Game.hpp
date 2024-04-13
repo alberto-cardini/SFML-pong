@@ -7,6 +7,7 @@
 #include "SFML/Graphics.hpp"
 #include "User.hpp"
 #include "Ball.hpp"
+#include "Obstacles.hpp"
 
 class Game{
 public:
@@ -26,6 +27,7 @@ private:
 
     User player;
     Ball ball;
+    std::vector<Obstacle> obs;
 
     static float maxHeight;  //counting 0 form the top
     static float minHeight;
