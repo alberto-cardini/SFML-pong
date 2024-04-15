@@ -6,6 +6,7 @@
 
 bool spawn = false;
 int Game::score = 0;
+int i = 0;
 float Game::maxHeight = 150;  //counting 0 form the top
 float Game::minHeight = 450;
 
@@ -67,6 +68,7 @@ void Game::render(){
 }
 
 void Game::update() {
+    deltaTime = clock.restart();
     ball.move(deltaTime);
     hit();
     static long seed;
@@ -116,37 +118,49 @@ void Game::eventManager(){
 
 void Game::run(){
     while(window.isOpen()){
-        deltaTime = clock.restart();
         eventManager();
         update();
         render();
     }
 }
 
-void Game::hit(){  // remember that the y-axis is flipped, down is positive and up negative. x-axis is OK
+void Game::hit(){ //remember that the y-axis is flipped, down is positive and up negative. x-axis is OK
 
-    for (Obstacle n : obs) {
-        if (ball.getGlobalBounds().intersects(n.getGlobalBounds()))
+    for (int i = 0; i < obs.size(); i++) {
+        if (ball.getGlobalBounds().intersects(obs[i].getGlobalBounds())) {
             ball.setVelocity(ball.getVelocity().x * (-1), ball.getVelocity().y * (1));
+            obs.erase( obs.end() - (obs.size() - i));
+            score++;
+        }
     }
 
     if (ball.getGlobalBounds().intersects(player.getGlobalBounds())){
-        ball.setVelocity(ball.getVelocity().x * (-1), ball.getVelocity().y * (1));
         score++;
+        ball.setVelocity(ball.getVelocity().x * (-1), ball.getVelocity().y * (1));
         Obstacle newObs;
         obs.push_back(newObs);
+        std::cout << ball.getVelocity().x << " " << ball.getVelocity().y << std::endl;
     }
+
     if (ball.getGlobalBounds().intersects(top.getGlobalBounds())){
         ball.setVelocity(ball.getVelocity().x * (1), ball.getVelocity().y * (-1));
+        std::cout << ball.getVelocity().x << " " << ball.getVelocity().y << std::endl;
     }
+
     if (ball.getGlobalBounds().intersects(bot.getGlobalBounds())){
         ball.setVelocity(ball.getVelocity().x * (1), ball.getVelocity().y * (-1));
+        std::cout << ball.getVelocity().x << " " << ball.getVelocity().y << std::endl;
     }
+
     if (ball.getGlobalBounds().intersects(left.getGlobalBounds())){
-        restart();
+        ball.setVelocity(ball.getVelocity().x * (-1), ball.getVelocity().y * (1));
+        std::cout << ball.getVelocity().x << " " << ball.getVelocity().y << std::endl;
+        //restart();
     }
+
     if (ball.getGlobalBounds().intersects(right.getGlobalBounds())){
         ball.setVelocity(ball.getVelocity().x * (-1), ball.getVelocity().y * (1));
+        std::cout << ball.getVelocity().x << " " << ball.getVelocity().y << std::endl;
     }
 }
 
