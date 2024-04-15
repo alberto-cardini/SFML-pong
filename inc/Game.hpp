@@ -21,6 +21,7 @@ public:
     void run();
     void restart();
 
+    sf::Vector2f getVector(const Obstacle& obs) const;
     void hit();
 
 private:
@@ -31,6 +32,7 @@ private:
 
     static float maxHeight;  //counting 0 form the top
     static float minHeight;
+    static int score;
 
     //Window
     sf::RenderWindow window;
@@ -45,8 +47,6 @@ private:
     //Time capture
     sf::Clock clock;
     sf::Time deltaTime;
-
-    static int score;
 };
 
 #endif

@@ -69,11 +69,15 @@ void Game::render(){
 void Game::update() {
     ball.move(deltaTime);
     hit();
+    static long seed;
+    seed = std::time(nullptr) + seed;
+    srand(seed);
 }
 
 void Game::restart(){
     score = 0;
     ball.setPosition(400, 300);
+    obs.clear();
 }
 
 void Game::eventManager(){
@@ -121,8 +125,9 @@ void Game::run(){
 
 void Game::hit(){  // remember that the y-axis is flipped, down is positive and up negative. x-axis is OK
 
-    for (Obstacle n : ) {
-
+    for (Obstacle n : obs) {
+        if (ball.getGlobalBounds().intersects(n.getGlobalBounds()))
+            ball.setVelocity(ball.getVelocity().x * (-1), ball.getVelocity().y * (1));
     }
 
     if (ball.getGlobalBounds().intersects(player.getGlobalBounds())){
@@ -145,3 +150,7 @@ void Game::hit(){  // remember that the y-axis is flipped, down is positive and 
     }
 }
 
+/*
+sf::Vector2f Game::getVector(const Obstacle& obs) const {
+
+}*/
