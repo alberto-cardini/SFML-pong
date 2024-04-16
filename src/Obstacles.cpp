@@ -2,8 +2,7 @@
 // Created by Alberto Cardini on 13/04/24.
 //
 #include "Obstacles.hpp"
-
-#include <iostream>
+#include <cmath>
 
 Obstacle::Obstacle() {
     int x = 150 + rand() % 350;
