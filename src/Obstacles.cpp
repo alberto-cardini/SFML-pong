@@ -14,5 +14,3 @@ Obstacle::Obstacle() {
     setPosition(150 + rand() % 350, 100 + rand() % 350);
 
 }
-
-//static_cast<sf::Color>(rand() % 8)
