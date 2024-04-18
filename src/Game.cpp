@@ -104,13 +104,13 @@ void Game::restart() {
 void Game::manageEvent() {
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-        if (player.getPosition().y + 20 < minHeight)
-            player.move(0, 5);
+        if (player.getPosition().y < minHeight)
+            player.move(0, 3);
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-        if (player.getPosition().y - 20 > maxHeight)
-            player.move(0, -5);
+        if (player.getPosition().y > maxHeight)
+            player.move(0, -3);
     }
 
     sf::Event event;
