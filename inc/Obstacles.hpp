@@ -6,6 +6,8 @@
 #define SFML_PONG_OBSTACLES_HPP
 
 #include "Game.hpp"
+#include "SFML/Graphics.hpp"
+#include "Entity.hpp"
 
 class Obstacle : public Entity {
 public:

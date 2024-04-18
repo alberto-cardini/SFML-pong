@@ -4,7 +4,7 @@
 #ifndef USER_hpp
 #define USER_hpp
 
-#include "Game.hpp"
+#include "Entity.hpp"
 
 class User : public Entity {
 public:
