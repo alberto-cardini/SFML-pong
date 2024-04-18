@@ -102,29 +102,23 @@ void Game::restart() {
 }
 
 void Game::manageEvent() {
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+        if (player.getPosition().y + 20 < minHeight)
+            player.move(0, 5);
+    }
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
+        if (player.getPosition().y - 20 > maxHeight)
+            player.move(0, -5);
+    }
+
     sf::Event event;
     while (window.pollEvent(event)) {
         switch (event.type) {
+
             case sf::Event::Closed:
                 window.close();
-                break;
-
-            case sf::Event::KeyPressed:
-
-                switch (event.key.scancode) {
-                    case sf::Keyboard::Scan::S:
-                        if (player.getPosition().y + 20 < minHeight)
-                            player.move(0, 20);
-                        break;
-
-                    case sf::Keyboard::Scan::W:
-                        if (player.getPosition().y - 20 > maxHeight)
-                            player.move(0, -20);
-                        break;
-
-                    default:
-                        break;
-                }
                 break;
 
             default:
