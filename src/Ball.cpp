@@ -13,12 +13,7 @@ Ball::Ball() : circle(10.f) {
 
 }
 
-sf::Vector2f Ball::getVelocity() const { return this->velocity; }
-
-void Ball::setVelocity(sf::Vector2f dir) { this->velocity = dir; }
-void Ball::setVelocity(float x, float y) { this->velocity.x = x; this->velocity.y = y; }
-
-void Ball::move(sf::Time dt) {
-    circle.move(velocity.x * dt.asSeconds(),velocity.y * dt.asSeconds());
+void Ball::move(sf::Time deltaTime) {
+    circle.move(velocity.x * deltaTime.asSeconds(),velocity.y * deltaTime.asSeconds());
 }
 

@@ -102,29 +102,27 @@ void Game::restart() {
 }
 
 void Game::manageEvent() {
-    sf::Event event;
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
+        if(player->getPosition().y > maxHeight ){
+            player->setVelocity(0,-5);
+            player->move(deltaTime);
+        }
+    }
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+        if(player->getPosition().y < minHeight ){
+            player->setVelocity(0, 5);
+            player->move(deltaTime);
+        }
+    }
+
+        sf::Event event;
     while (window.pollEvent(event)) {
         switch (event.type) {
+
             case sf::Event::Closed:
                 window.close();
-                break;
-
-            case sf::Event::KeyPressed:
-
-                switch (event.key.scancode) {
-                    case sf::Keyboard::Scan::S:
-                        if (player->getPosition().y + 20 < minHeight)
-                            player->move(0, 20);
-                        break;
-
-                    case sf::Keyboard::Scan::W:
-                        if (player->getPosition().y - 20 > maxHeight)
-                            player->move(0, -20);
-                        break;
-
-                    default:
-                        break;
-                }
                 break;
 
             default:
@@ -154,7 +152,7 @@ void Game::hit() {  // remember that the y-axis is flipped, down is positive and
             ball->setVelocity(ball->getVelocity().x * (-1),
                              ball->getVelocity().y * (1));
             obs.erase(obs.end() - (obs.size() - i));
-            gameTime += obs[i]->getTimeGain();
+            gameTime += ((Obstacle*)obs[i])->getTimeGain();
         }
     }
 

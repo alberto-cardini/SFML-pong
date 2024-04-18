@@ -19,6 +19,7 @@ set(SOURCE_FILE
         src/User.cpp
         src/Ball.cpp
         src/Obstacles.cpp
+        src/Entity.cpp
 
 )
 

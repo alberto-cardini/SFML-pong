@@ -5,8 +5,7 @@
 #ifndef SFML_PONG_OBSTACLES_HPP
 #define SFML_PONG_OBSTACLES_HPP
 
-#include "SFML/Graphics.hpp"
-#include "Entity.hpp"
+#include "Game.hpp"
 
 class Obstacle : public Entity {
 public:
@@ -17,7 +16,9 @@ public:
     }
 
     int getVertex() const { return vertex; }
+
     const sf::Time& getTimeGain() const { return timeGain; }
+
     //const sf::Text& getTextTimeGain() const { return textTimeGain; }
 
     //void setTextTimeGain(sf::String& string) { textTimeGain.setString(string); }

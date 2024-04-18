@@ -5,33 +5,27 @@
 #ifndef BALL_hpp
 #define BALL_hpp
 
-#include "Game.hpp"
-#include "SFML/Graphics.hpp"
 #include "Entity.hpp"
 
 class Ball : public Entity {
 public:
-    Ball();
 
-    sf::Vector2f getVelocity() const;
+    Ball();
 
     sf::Vector2f getPosition() { return circle.getPosition(); }
     void setPosition(float x, float y) { circle.setPosition(x, y); }
 
-    const sf::FloatRect getGlobalBounds() const override {
+    const sf::FloatRect getGlobalBounds() const {
         return getTransform().transformRect(circle.getGlobalBounds());
     }
-
-    void setVelocity(sf::Vector2f dir);
-    void setVelocity(float x, float y);
 
     void move(sf::Time dt);
 
 private:
-    sf::Vector2f velocity;
+
     sf::CircleShape circle;
 
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override {
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const {
         states.transform *= getTransform();
         target.draw(circle, states);
     }

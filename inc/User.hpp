@@ -5,11 +5,6 @@
 #define USER_hpp
 
 #include "Game.hpp"
-#include "SFML/Graphics/Rect.hpp"
-#include "SFML/System/Vector2.hpp"
-#include "SFML/Graphics/Texture.hpp"
-#include "SFML/Graphics/Sprite.hpp"
-#include "Entity.hpp"
 
 class User : public Entity {
 public:
@@ -18,7 +13,7 @@ public:
     const sf::FloatRect getGlobalBounds() const override {
         return getTransform().transformRect(platform.getGlobalBounds());
     }
-    void move(int x, int y) override;
+    void move(sf::Time deltaTime) override;
 private:
 
     sf::RectangleShape platform;
