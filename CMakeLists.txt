@@ -28,6 +28,7 @@ set(INCLUDE_FILE
         inc/Ball.hpp
         inc/User.hpp
         inc/Obstacles.hpp
+        inc/Entity.hpp
 
 )
 

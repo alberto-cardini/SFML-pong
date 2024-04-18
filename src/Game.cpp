@@ -39,8 +39,8 @@ Game::Game() : window(sf::VideoMode(800, 600), "Pong", sf::Style::Close) {
     right.setPosition(653, 294);
 
     // Entities
-    player = User();
-    ball = Ball();
+    player = new User();
+    ball = new Ball();
 
     // Time
     dtClock = sf::Clock();
@@ -66,10 +66,10 @@ void Game::render() {
     window.clear();
     renderHUD();
     window.draw(HUD);
-    window.draw(ball);
-    window.draw(player);
-    for (const Obstacle& n : obs) {
-        window.draw(n);
+    window.draw(*ball);
+    window.draw(*player);
+    for (const Entity* n : obs) {
+        window.draw(*n);
         // window.draw(n.timeGain);
     }
     window.display();
@@ -78,7 +78,7 @@ void Game::render() {
 void Game::update() {
     if (gameClock.getElapsedTime().asSeconds() < gameTime.asSeconds()) {
         deltaTime = dtClock.restart();
-        ball.move(deltaTime);
+        ball->move(deltaTime);
         hit();
         static long seed;
         seed = std::time(nullptr) + seed;
@@ -97,7 +97,7 @@ void Game::update() {
 void Game::restart() {
     gameTime = sf::seconds(20);
     gameClock.restart();
-    ball.setPosition(400, 300);
+    ball->setPosition(400, 300);
     obs.clear();
 }
 
@@ -113,13 +113,13 @@ void Game::manageEvent() {
 
                 switch (event.key.scancode) {
                     case sf::Keyboard::Scan::S:
-                        if (player.getPosition().y + 20 < minHeight)
-                            player.move(0, 20);
+                        if (player->getPosition().y + 20 < minHeight)
+                            player->move(0, 20);
                         break;
 
                     case sf::Keyboard::Scan::W:
-                        if (player.getPosition().y - 20 > maxHeight)
-                            player.move(0, -20);
+                        if (player->getPosition().y - 20 > maxHeight)
+                            player->move(0, -20);
                         break;
 
                     default:
@@ -142,7 +142,7 @@ void Game::run() {
 }
 
 void Game::spawnObs() {
-    Obstacle newObs;
+    Entity* newObs = new Obstacle();
     obs.push_back(newObs);
 }
 
@@ -150,37 +150,37 @@ void Game::hit() {  // remember that the y-axis is flipped, down is positive and
                     // up negative. x-axis is OK
 
     for (int i = 0; i < obs.size(); i++) {
-        if (ball.getGlobalBounds().intersects(obs[i].getGlobalBounds())) {
-            ball.setVelocity(ball.getVelocity().x * (-1),
-                             ball.getVelocity().y * (1));
+        if (ball->getGlobalBounds().intersects(obs[i]->getGlobalBounds())) {
+            ball->setVelocity(ball->getVelocity().x * (-1),
+                             ball->getVelocity().y * (1));
             obs.erase(obs.end() - (obs.size() - i));
-            gameTime += obs[i].getTimeGain();
+            gameTime += obs[i]->getTimeGain();
         }
     }
 
-    if (ball.getGlobalBounds().intersects(player.getGlobalBounds())) {
-        ball.setVelocity(ball.getVelocity().x * (-1),
-                         ball.getVelocity().y * (1));
+    if (ball->getGlobalBounds().intersects(player->getGlobalBounds())) {
+        ball->setVelocity(ball->getVelocity().x * (-1),
+                         ball->getVelocity().y * (1));
     }
 
-    if (ball.getGlobalBounds().intersects(top.getGlobalBounds())) {
-        ball.setVelocity(ball.getVelocity().x * (1),
-                         ball.getVelocity().y * (-1));
+    if (ball->getGlobalBounds().intersects(top.getGlobalBounds())) {
+        ball->setVelocity(ball->getVelocity().x * (1),
+                         ball->getVelocity().y * (-1));
     }
 
-    if (ball.getGlobalBounds().intersects(bot.getGlobalBounds())) {
-        ball.setVelocity(ball.getVelocity().x * (1),
-                         ball.getVelocity().y * (-1));
+    if (ball->getGlobalBounds().intersects(bot.getGlobalBounds())) {
+        ball->setVelocity(ball->getVelocity().x * (1),
+                         ball->getVelocity().y * (-1));
     }
 
-    if (ball.getGlobalBounds().intersects(left.getGlobalBounds())) {
-        ball.setVelocity(ball.getVelocity().x * (-1),
-                         ball.getVelocity().y * (1));
+    if (ball->getGlobalBounds().intersects(left.getGlobalBounds())) {
+        ball->setVelocity(ball->getVelocity().x * (-1),
+                         ball->getVelocity().y * (1));
         gameTime -= sf::seconds(3);
     }
 
-    if (ball.getGlobalBounds().intersects(right.getGlobalBounds())) {
-        ball.setVelocity(ball.getVelocity().x * (-1),
-                         ball.getVelocity().y * (1));
+    if (ball->getGlobalBounds().intersects(right.getGlobalBounds())) {
+        ball->setVelocity(ball->getVelocity().x * (-1),
+                         ball->getVelocity().y * (1));
     }
 }

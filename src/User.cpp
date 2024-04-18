@@ -8,4 +8,3 @@ User::User() : platform(sf::Vector2f(5.f, 100.f)) {
     setPosition(150.f, 300.f);
     platform.setFillColor(sf::Color::Green);
 }
-

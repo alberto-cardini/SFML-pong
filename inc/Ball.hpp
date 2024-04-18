@@ -7,8 +7,9 @@
 
 #include "Game.hpp"
 #include "SFML/Graphics.hpp"
+#include "Entity.hpp"
 
-class Ball : public sf::Drawable, public sf::Transformable {
+class Ball : public Entity {
 public:
     Ball();
 
@@ -17,7 +18,7 @@ public:
     sf::Vector2f getPosition() { return circle.getPosition(); }
     void setPosition(float x, float y) { circle.setPosition(x, y); }
 
-    sf::FloatRect getGlobalBounds() const {
+    const sf::FloatRect getGlobalBounds() const override {
         return getTransform().transformRect(circle.getGlobalBounds());
     }
 
@@ -30,7 +31,7 @@ private:
     sf::Vector2f velocity;
     sf::CircleShape circle;
 
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override {
         states.transform *= getTransform();
         target.draw(circle, states);
     }

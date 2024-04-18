@@ -4,10 +4,11 @@
 #ifndef GAME_hpp
 #define GAME_hpp
 
+#include "SFML/Graphics.hpp"
 #include "Ball.hpp"
 #include "Obstacles.hpp"
-#include "SFML/Graphics.hpp"
 #include "User.hpp"
+#include "Entity.hpp"
 
 class Game {
 public:
@@ -24,9 +25,9 @@ public:
     void spawnObs();
 
 private:
-    User player;
-    Ball ball;
-    std::vector<Obstacle> obs;
+    Entity* player;
+    Entity* ball;
+    std::vector<Entity*> obs;
 
     static float maxHeight;  // counting 0 form the top
     static float minHeight;

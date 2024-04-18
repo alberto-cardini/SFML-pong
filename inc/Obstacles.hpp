@@ -6,12 +6,13 @@
 #define SFML_PONG_OBSTACLES_HPP
 
 #include "SFML/Graphics.hpp"
+#include "Entity.hpp"
 
-class Obstacle : public sf::Drawable, sf::Transformable {
+class Obstacle : public Entity {
 public:
     Obstacle();
 
-    const sf::FloatRect getGlobalBounds() const {
+    const sf::FloatRect getGlobalBounds() const override {
         return getTransform().transformRect(entity.getGlobalBounds());
     }
 
