@@ -12,22 +12,27 @@ public:
 
     Ball();
 
-    sf::Vector2f getPosition() { return circle.getPosition(); }
-    void setPosition(float x, float y) { circle.setPosition(x, y); }
+    sf::Vector2f getPosition() { return ballSprite.getPosition(); }
+    void setPosition(float x, float y) { ballSprite.setPosition(x, y); }
 
     const sf::FloatRect getGlobalBounds() const {
-        return getTransform().transformRect(circle.getGlobalBounds());
+        return getTransform().transformRect(ballSprite.getGlobalBounds());
     }
+
+    void setVelocity(sf::Vector2f dir);
+    void setVelocity(float x, float y);
 
     void move(sf::Time dt);
 
 private:
+    sf::Vector2f velocity;
+    sf::Sprite ballSprite;
+    sf::Texture ballTex;
 
-    sf::CircleShape circle;
-
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
         states.transform *= getTransform();
-        target.draw(circle, states);
+        states.texture = &ballTex;
+        target.draw(ballSprite, states);
     }
 };
 

@@ -38,10 +38,13 @@ private:
     sf::Text HUD;
     sf::Font font;
     // Border
-    sf::RectangleShape top;
-    sf::RectangleShape bot;
-    sf::RectangleShape right;
-    sf::RectangleShape left;
+    sf::Sprite top;
+    sf::Sprite bot;
+    sf::Sprite right;
+    sf::Sprite left;
+
+    sf::Texture borderTex;
+    sf::Texture borderTex2;
     // Time capture
     sf::Clock dtClock;
     sf::Clock gameClock;

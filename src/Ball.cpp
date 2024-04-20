@@ -3,8 +3,12 @@
 //
 #include "Game.hpp"
 
-Ball::Ball() : circle(10.f) {
+Ball::Ball() {
 
+    if(!ballTex.loadFromFile("asset/ballTex.png")){
+        perror("Wrong file");
+    }
+    ballSprite.setTexture(ballTex);
     setOrigin(10.f, 10.f);
     setPosition(400.f, 300.f);
 
@@ -14,6 +18,6 @@ Ball::Ball() : circle(10.f) {
 }
 
 void Ball::move(sf::Time deltaTime) {
-    circle.move(velocity.x * deltaTime.asSeconds(),velocity.y * deltaTime.asSeconds());
+    ballSprite.move(velocity.x * deltaTime.asSeconds(),velocity.y * deltaTime.asSeconds());
 }
 

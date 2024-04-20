@@ -16,10 +16,10 @@ Obstacle::Obstacle() {
     setPosition(x, y);
 
     /*
-    if (!font.loadFromFile("font/OpenSans-Regular.ttf"))
+    if (!asset.loadFromFile("asset/OpenSans-Regular.ttf"))
         perror("Wrong working directory");
 
         sf::String string = std::to_string(vertex) + " sec";
-        textTimeGain = sf::Text(string, font, 15);
+        textTimeGain = sf::Text(string, asset, 15);
         textTimeGain.setPosition(x, y);*/
 }

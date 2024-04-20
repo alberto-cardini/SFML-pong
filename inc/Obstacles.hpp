@@ -28,7 +28,7 @@ private:
     int vertex;
     sf::CircleShape entity;
 
-    //sf::Font font;
+    //sf::Font asset;
     //sf::Text textTimeGain;
     sf::Time timeGain;
 

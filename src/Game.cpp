@@ -13,18 +13,23 @@ Game::Game() {
     window->setFramerateLimit(60);
 
     // HUD
-    if (!font.loadFromFile("font/OpenSans-Regular.ttf")) {
+    if (!font.loadFromFile("asset/OpenSans-Regular.ttf")) {
+        perror("Wrong working directory");
+    }
+
+    if (!borderTex.loadFromFile("asset/borderTex.png")) {
+        perror("Wrong working directory");
+
+    }if (!borderTex2.loadFromFile("asset/borderTex2.png")) {
         perror("Wrong working directory");
     }
     HUD.setFont(font);
     HUD.setPosition(100, 50);
     // Border
-    top = sf::RectangleShape(sf::Vector2f(500, 6));
-    bot = sf::RectangleShape(sf::Vector2f(500, 6));
-    right = sf::RectangleShape(sf::Vector2f(6, 412));
-    left = sf::RectangleShape(sf::Vector2f(6, 412));
-
-    left.setFillColor(sf::Color::Red);
+    top.setTexture(borderTex);
+    bot.setTexture(borderTex);
+    left.setTexture(borderTex2);
+    right.setTexture(borderTex2);
 
     top.setOrigin(250, 3);
     bot.setOrigin(250, 3);
