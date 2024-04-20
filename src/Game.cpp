@@ -18,7 +18,6 @@ Game::Game() {
     }
     HUD.setFont(font);
     HUD.setPosition(100, 50);
-
     // Border
     top = sf::RectangleShape(sf::Vector2f(500, 6));
     bot = sf::RectangleShape(sf::Vector2f(500, 6));
@@ -48,6 +47,9 @@ Game::Game() {
     gameClock = sf::Clock();
     spawnClock = sf::Clock();
     gameTime = sf::seconds(20);
+    //Game State
+    gamePaused = false;
+    gameOver = false;
 }
 
 void Game::renderHUD() {

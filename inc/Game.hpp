@@ -48,6 +48,9 @@ private:
     sf::Clock spawnClock;
     sf::Time deltaTime;
     sf::Time gameTime;
+    //Game State
+    bool gamePaused;
+    bool gameOver;
 };
 
 #endif
