@@ -5,10 +5,11 @@
 
 Ball::Ball() {
 
-    if(!ballTex.loadFromFile("asset/ballTex.png")){
+    ballTex = new sf::Texture;
+    if (!ballTex->loadFromFile("asset/ballTex.png")) {
         perror("Wrong file");
     }
-    ballSprite.setTexture(ballTex);
+    ballSprite.setTexture(*ballTex);
     setOrigin(10.f, 10.f);
     setPosition(400.f, 300.f);
 

@@ -27,11 +27,13 @@ public:
 private:
     sf::Vector2f velocity;
     sf::Sprite ballSprite;
-    sf::Texture ballTex;
+    sf::Texture* ballTex;  // initialization on the heap to avoid memory leaks.
+                           // Otherwise, the texture pointer is lost
+                           // TODO asser manager
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
         states.transform *= getTransform();
-        states.texture = &ballTex;
+        states.texture = ballTex;
         target.draw(ballSprite, states);
     }
 };
