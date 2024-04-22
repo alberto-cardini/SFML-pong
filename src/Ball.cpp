@@ -5,11 +5,13 @@
 
 Ball::Ball() {
 
-    ballTex = new sf::Texture;
-    if (!ballTex->loadFromFile("asset/ballTex.png")) {
+    // initialization on the heap to avoid memory leaks.
+    // Otherwise, the texture pointer is lost
+    bodyTex = new sf::Texture;
+    if (!bodyTex->loadFromFile("asset/ballTex.png")) {
         perror("Wrong file");
     }
-    ballSprite.setTexture(*ballTex);
+    bodySprite.setTexture(*bodyTex);
     setOrigin(10.f, 10.f);
     setPosition(400.f, 300.f);
 
@@ -18,7 +20,7 @@ Ball::Ball() {
 
 }
 
-void Ball::move(sf::Time deltaTime) {
-    ballSprite.move(velocity.x * deltaTime.asSeconds(),velocity.y * deltaTime.asSeconds());
+void Ball::move(sf::Time dt) {
+    bodySprite.move(velocity.x * dt.asSeconds(), velocity.y * dt.asSeconds());
 }
 

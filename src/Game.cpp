@@ -2,6 +2,7 @@
 // Created by Alberto Cardini on 04/04/24.
 //
 #include "Game.hpp"
+
 #include <iostream>
 
 sf::Time Game::spawnTime = sf::seconds(5);
@@ -13,18 +14,27 @@ Game::Game() {
     window->setFramerateLimit(60);
 
     // HUD
-    if (!font.loadFromFile("font/OpenSans-Regular.ttf")) {
+    if (!font.loadFromFile("asset/OpenSans-Regular.ttf")) {
+        perror("Wrong working directory");
+    }
+
+    if (!borderTex.loadFromFile("asset/borderTex.png")) {
+        perror("Wrong working directory");
+    }
+    if (!leftBorderTex.loadFromFile("asset/leftBorderTex.png")) {
+        perror("Wrong working directory");
+    }
+    if (!rightBorderTex.loadFromFile("asset/rightBorderTex.png")) {
         perror("Wrong working directory");
     }
     HUD.setFont(font);
     HUD.setPosition(100, 50);
-    // Border
-    top = sf::RectangleShape(sf::Vector2f(500, 6));
-    bot = sf::RectangleShape(sf::Vector2f(500, 6));
-    right = sf::RectangleShape(sf::Vector2f(6, 412));
-    left = sf::RectangleShape(sf::Vector2f(6, 412));
 
-    left.setFillColor(sf::Color::Red);
+    // Border
+    top.setTexture(borderTex);
+    bot.setTexture(borderTex);
+    left.setTexture(leftBorderTex);
+    right.setTexture(rightBorderTex);
 
     top.setOrigin(250, 3);
     bot.setOrigin(250, 3);
@@ -47,7 +57,7 @@ Game::Game() {
     gameClock = sf::Clock();
     spawnClock = sf::Clock();
     gameTime = sf::seconds(20);
-    //Game State
+    // Game State
     gamePaused = false;
     gameOver = false;
 }
@@ -105,18 +115,15 @@ void Game::restart() {
 }
 
 void Game::manageEvent() {
-
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-        if (player->getPosition().y + 20 < minHeight)
-            player->move(deltaTime);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+        if (player->getPosition().y < minHeight) ((User*)player)->move(deltaTime);
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-        if (player->getPosition().y - 20 > maxHeight)
-            player->move(deltaTime);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+        if (player->getPosition().y > maxHeight) ((User*)player)->move(deltaTime);
     }
 
-    sf::Event event;
+        sf::Event event;
     while (window->pollEvent(event)) {
         switch (event.type) {
 
@@ -149,7 +156,7 @@ void Game::hit() {  // remember that the y-axis is flipped, down is positive and
     for (int i = 0; i < obs.size(); i++) {
         if (ball->getGlobalBounds().intersects(obs[i]->getGlobalBounds())) {
             ball->setVelocity(ball->getVelocity().x * (-1),
-                              ball->getVelocity().y * (1));
+                             ball->getVelocity().y * (1));
             obs.erase(obs.end() - (obs.size() - i));
             gameTime += ((Obstacle*)obs[i])->getTimeGain();
         }
@@ -157,27 +164,27 @@ void Game::hit() {  // remember that the y-axis is flipped, down is positive and
 
     if (ball->getGlobalBounds().intersects(player->getGlobalBounds())) {
         ball->setVelocity(ball->getVelocity().x * (-1),
-                          ball->getVelocity().y * (1));
+                         ball->getVelocity().y * (1));
     }
 
     if (ball->getGlobalBounds().intersects(top.getGlobalBounds())) {
         ball->setVelocity(ball->getVelocity().x * (1),
-                          ball->getVelocity().y * (-1));
+                         ball->getVelocity().y * (-1));
     }
 
     if (ball->getGlobalBounds().intersects(bot.getGlobalBounds())) {
         ball->setVelocity(ball->getVelocity().x * (1),
-                          ball->getVelocity().y * (-1));
+                         ball->getVelocity().y * (-1));
     }
 
     if (ball->getGlobalBounds().intersects(left.getGlobalBounds())) {
         ball->setVelocity(ball->getVelocity().x * (-1),
-                          ball->getVelocity().y * (1));
+                         ball->getVelocity().y * (1));
         gameTime -= sf::seconds(3);
     }
 
     if (ball->getGlobalBounds().intersects(right.getGlobalBounds())) {
         ball->setVelocity(ball->getVelocity().x * (-1),
-                          ball->getVelocity().y * (1));
+                         ball->getVelocity().y * (1));
     }
 }
