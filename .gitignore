@@ -5,6 +5,7 @@ out
 .vs
 .vscode
 cmake-build-debug/
+cmake-build-release/
 .github
 .clang-format
 SFML-pong
