@@ -7,3 +7,4 @@ out
 cmake-build-debug/
 .github
 .clang-format
+SFML-pong
