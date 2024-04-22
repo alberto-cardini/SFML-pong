@@ -33,7 +33,7 @@ private:
     static float minHeight;
     static sf::Time spawnTime;
     // Window
-    sf::RenderWindow window;
+    sf::RenderWindow* window;
     // HUD
     sf::Text HUD;
     sf::Font font;

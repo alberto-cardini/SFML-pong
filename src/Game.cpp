@@ -8,8 +8,9 @@ sf::Time Game::spawnTime = sf::seconds(5);
 float Game::maxHeight = 150;  // counting 0 form the top
 float Game::minHeight = 450;
 
-Game::Game() : window(sf::VideoMode(800, 600), "Pong", sf::Style::Close) {
-    window.setFramerateLimit(60);
+Game::Game() {
+    window = new sf::RenderWindow(sf::VideoMode(800, 600), "Pong", sf::Style::Close);
+    window->setFramerateLimit(60);
 
     // HUD
     if (!font.loadFromFile("font/OpenSans-Regular.ttf")) {
@@ -56,23 +57,23 @@ void Game::renderHUD() {
             gameTime.asSeconds() - gameClock.getElapsedTime().asSeconds())) +
         " sec.";
     HUD.setString(string);
-    window.draw(top);
-    window.draw(bot);
-    window.draw(right);
-    window.draw(left);
+    window->draw(top);
+    window->draw(bot);
+    window->draw(right);
+    window->draw(left);
 }
 
 void Game::render() {
-    window.clear();
+    window->clear();
     renderHUD();
-    window.draw(HUD);
-    window.draw(*ball);
-    window.draw(*player);
+    window->draw(HUD);
+    window->draw(*ball);
+    window->draw(*player);
     for (const Entity* n : obs) {
-        window.draw(*n);
+        window->draw(*n);
         // window.draw(n.timeGain);
     }
-    window.display();
+    window->display();
 }
 
 void Game::update() {
@@ -118,11 +119,11 @@ void Game::manageEvent() {
     }
 
         sf::Event event;
-    while (window.pollEvent(event)) {
+    while (window->pollEvent(event)) {
         switch (event.type) {
 
             case sf::Event::Closed:
-                window.close();
+                window->close();
                 break;
 
             default:
@@ -132,7 +133,7 @@ void Game::manageEvent() {
 }
 
 void Game::run() {
-    while (window.isOpen()) {
+    while (window->isOpen()) {
         manageEvent();
         update();
         render();
