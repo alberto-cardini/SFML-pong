@@ -44,7 +44,8 @@ private:
     sf::Sprite left;
 
     sf::Texture borderTex;
-    sf::Texture borderTex2;
+    sf::Texture leftBorderTex;
+    sf::Texture rightBorderTex;
     // Time capture
     sf::Clock dtClock;
     sf::Clock gameClock;
