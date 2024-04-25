@@ -5,21 +5,17 @@
 #include <cmath>
 
 Obstacle::Obstacle() {
+
+    velocity.x = 0;
+    velocity.y = 0;
+
     int x = 150 + rand() % 350;
     int y = 100 + rand() % 350;
 
     vertex = 3 + (rand() % 4);
-    timeGain = sf::seconds(vertex);
     entity = sf::CircleShape(pow(vertex - 10, 2), vertex);
     entity.setFillColor(
         sf::Color(10 + rand() % 244, 10 + rand() % 244, 10 + rand() % 244));
-    setPosition(x, y);
+    entity.setPosition(x, y);
 
-    /*
-    if (!asset.loadFromFile("asset/OpenSans-Regular.ttf"))
-        perror("Wrong working directory");
-
-        sf::String string = std::to_string(vertex) + " sec";
-        textTimeGain = sf::Text(string, asset, 15);
-        textTimeGain.setPosition(x, y);*/
 }

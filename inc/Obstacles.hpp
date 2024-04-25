@@ -13,25 +13,19 @@ public:
 
     int getVertex() const { return vertex; }
 
-    const sf::Time& getTimeGain() const { return timeGain; }
-
     void move(sf::Time deltaTime) override {
         bodySprite.move(0,0);
     };
 
-    //const sf::Text& getTextTimeGain() const { return textTimeGain; }
-
-    //void setTextTimeGain(sf::String& string) { textTimeGain.setString(string); }
-
 private:
+
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override {
+        states.transform *= getTransform();
+        target.draw(entity, states);
+    }
 
     int vertex;
     sf::CircleShape entity;
-
-    //sf::Font asset;
-    //sf::Text textTimeGain;
-    sf::Time timeGain;
-
 };
 
 #endif  // SFML_PONG_OBSTACLES_HPP
