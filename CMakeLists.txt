@@ -20,6 +20,7 @@ set(SOURCE_FILE
         src/Ball.cpp
         src/Obstacles.cpp
         src/Entity.cpp
+        src/HUD.cpp
 
 )
 
@@ -30,6 +31,7 @@ set(INCLUDE_FILE
         inc/User.hpp
         inc/Obstacles.hpp
         inc/Entity.hpp
+        inc/HUD.hpp
 
 )
 
