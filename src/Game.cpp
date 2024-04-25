@@ -10,7 +10,8 @@ float Game::maxHeight = 150;  // counting 0 form the top
 float Game::minHeight = 450;
 
 Game::Game() {
-    window = new sf::RenderWindow(sf::VideoMode(800, 600), "Pong", sf::Style::Close);
+    window =
+        new sf::RenderWindow(sf::VideoMode(800, 600), "Pong", sf::Style::Close);
     window->setFramerateLimit(60);
 
     // HUD
@@ -116,17 +117,18 @@ void Game::restart() {
 
 void Game::manageEvent() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        if (player->getPosition().y < minHeight) ((User*)player)->move(deltaTime);
+        if (player->getPosition().y < minHeight)
+            dynamic_cast<User*>(player)->move(deltaTime);
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        if (player->getPosition().y > maxHeight) ((User*)player)->move(deltaTime);
+        if (player->getPosition().y > maxHeight)
+            dynamic_cast<User*>(player)->move(deltaTime);
     }
 
-        sf::Event event;
+    sf::Event event;
     while (window->pollEvent(event)) {
         switch (event.type) {
-
             case sf::Event::Closed:
                 window->close();
                 break;
@@ -156,35 +158,36 @@ void Game::hit() {  // remember that the y-axis is flipped, down is positive and
     for (int i = 0; i < obs.size(); i++) {
         if (ball->getGlobalBounds().intersects(obs[i]->getGlobalBounds())) {
             ball->setVelocity(ball->getVelocity().x * (-1),
-                             ball->getVelocity().y * (1));
+                              ball->getVelocity().y * (1));
             obs.erase(obs.end() - (obs.size() - i));
-            gameTime += ((Obstacle*)obs[i])->getTimeGain();
+            gameTime +=
+                sf::seconds(dynamic_cast<Obstacle*>(obs[i])->getVertex());
         }
     }
 
     if (ball->getGlobalBounds().intersects(player->getGlobalBounds())) {
         ball->setVelocity(ball->getVelocity().x * (-1),
-                         ball->getVelocity().y * (1));
+                          ball->getVelocity().y * (1));
     }
 
     if (ball->getGlobalBounds().intersects(top.getGlobalBounds())) {
         ball->setVelocity(ball->getVelocity().x * (1),
-                         ball->getVelocity().y * (-1));
+                          ball->getVelocity().y * (-1));
     }
 
     if (ball->getGlobalBounds().intersects(bot.getGlobalBounds())) {
         ball->setVelocity(ball->getVelocity().x * (1),
-                         ball->getVelocity().y * (-1));
+                          ball->getVelocity().y * (-1));
     }
 
     if (ball->getGlobalBounds().intersects(left.getGlobalBounds())) {
         ball->setVelocity(ball->getVelocity().x * (-1),
-                         ball->getVelocity().y * (1));
+                          ball->getVelocity().y * (1));
         gameTime -= sf::seconds(3);
     }
 
     if (ball->getGlobalBounds().intersects(right.getGlobalBounds())) {
         ball->setVelocity(ball->getVelocity().x * (-1),
-                         ball->getVelocity().y * (1));
+                          ball->getVelocity().y * (1));
     }
 }
