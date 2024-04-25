@@ -104,21 +104,17 @@ void Game::restart() {
 
 void Game::manageEvent() {
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-        if(player->getPosition().y > maxHeight ){
-            player->setVelocity(0,-5);
-            player->move(deltaTime);
-        }
-    }
-
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-        if(player->getPosition().y < minHeight ){
-            player->setVelocity(0, 5);
+        if (player->getPosition().y + 20 < minHeight)
             player->move(deltaTime);
-        }
     }
 
-        sf::Event event;
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
+        if (player->getPosition().y - 20 > maxHeight)
+            player->move(deltaTime);
+    }
+
+    sf::Event event;
     while (window->pollEvent(event)) {
         switch (event.type) {
 
