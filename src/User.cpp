@@ -9,8 +9,9 @@ User::User() {
     if (!bodyTex->loadFromFile("asset/playerTex.png")) {
         perror("Wrong directory");
     }
-    setOrigin(0.f,50.f);
-    setPosition(150.f, 300.f);
+    bodySprite.setTexture(*bodyTex);
+    bodySprite.setOrigin(0.f,50.f);
+    bodySprite.setPosition(150.f, 300.f);
 
     velocity.x = 0;
     velocity.y = 5;
