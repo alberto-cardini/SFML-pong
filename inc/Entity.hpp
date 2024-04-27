@@ -11,15 +11,18 @@ class Entity : public sf::Drawable, public sf::Transformable {
 
 public:
 
+    Entity();
+    explicit Entity(const std::string& texturePath, sf::Vector2f pos, sf::Vector2f vel, sf::Vector2f origin);
+
     const sf::FloatRect getGlobalBounds() {
         return getTransform().transformRect(bodySprite.getGlobalBounds());
     };
 
     virtual void move(sf::Time deltaTime) = 0;
 
-    void setVelocity(int x, int y) { velocity.x = x; velocity.y = y; }
+    void setVelocity(float x, float y) { velocity.x = x; velocity.y = y; }
 
-    const sf::Vector2i& getVelocity() const { return velocity; }
+    const sf::Vector2f& getVelocity() const { return velocity; }
 
     sf::Vector2f getPosition() { return bodySprite.getPosition(); }
 
@@ -35,7 +38,7 @@ private:
 
 protected:
 
-    sf::Vector2i velocity;
+    sf::Vector2f velocity;
     sf::Sprite bodySprite;
     sf::Texture* bodyTex;
 

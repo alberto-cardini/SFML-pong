@@ -16,6 +16,8 @@ public:
 
     void render();
     void renderHUD();
+    void render_menu();
+
     void update();
     void manageEvent();
     void run();

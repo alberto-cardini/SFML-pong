@@ -9,10 +9,14 @@
 
 class Ball : public Entity {
 public:
+    Ball()
+        : Entity("asset/ballTex.png", sf::Vector2f(400.f, 300.f),
+                 sf::Vector2f(-200, 100), sf::Vector2f(10.f, 10.f)) {}
 
-    Ball();
-
-    void move(sf::Time dt) override;
+    void move(sf::Time dt) override {
+        bodySprite.move(velocity.x * dt.asSeconds(),
+                        velocity.y * dt.asSeconds());
+    };
 
 private:
     // TODO asser manager

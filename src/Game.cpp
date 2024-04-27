@@ -89,10 +89,13 @@ void Game::render() {
     window->display();
 }
 
+void Game::render_menu() { std::cout << gamePaused << std::endl; }
+
 void Game::update() {
-    if (gameClock.getElapsedTime().asSeconds() < gameTime.asSeconds()) {
+    if (gameClock.getElapsedTime().asSeconds() < gameTime.asSeconds() && !gamePaused) {
         deltaTime = dtClock.restart();
         ball->move(deltaTime);
+        std::cout << ball->getPosition().x << " " << ball->getPosition().y << std::endl;
         hit();
         static long seed;
         seed = std::time(nullptr) + seed;
@@ -102,9 +105,11 @@ void Game::update() {
             spawnClock.restart();
             spawnObs();
         }
-    } else {
+    } else if (gameClock.getElapsedTime().asSeconds() > gameTime.asSeconds() || gamePaused) {
         gameClock.restart();
         restart();
+    } else {
+        std::cout << "paused" << std::endl;
     }
 }
 
@@ -117,13 +122,24 @@ void Game::restart() {
 
 void Game::manageEvent() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        if (player->getPosition().y < minHeight)
-            dynamic_cast<User*>(player)->move(deltaTime);
+        if (player->getPosition().y < minHeight) {
+            player->setVelocity(0, 5);
+            player->move(deltaTime);
+        }
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        if (player->getPosition().y > maxHeight)
-            dynamic_cast<User*>(player)->move(deltaTime);
+        if (player->getPosition().y > maxHeight){
+            player->setVelocity(0,-5);
+            player->move(deltaTime);
+        }
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) gamePaused = true;
+
+    while (gamePaused) {
+        render_menu();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) gamePaused = false;
     }
 
     sf::Event event;
