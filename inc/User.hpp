@@ -12,7 +12,7 @@ public:
         : Entity("asset/playerTex.png", sf::Vector2f(150.f, 300.f),
                  sf::Vector2f(0, 5), sf::Vector2f(0.f, 50.f)) {}
 
-    void move(sf::Time deltaTime) override {
+    void move(const sf::Time& deltaTime) override {
         bodySprite.move(velocity.x, velocity.y);
     };
 

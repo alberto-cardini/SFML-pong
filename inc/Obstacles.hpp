@@ -13,7 +13,11 @@ public:
 
     int getVertex() const { return vertex; }
 
-    void move(sf::Time deltaTime) override {
+    const sf::FloatRect getGlobalBounds() {
+        return getTransform().transformRect(entity.getGlobalBounds());
+    };
+
+    void move(const sf::Time& deltaTime) override {
         bodySprite.move(0,0);
     };
 

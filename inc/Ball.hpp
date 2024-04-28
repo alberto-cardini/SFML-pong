@@ -13,7 +13,7 @@ public:
         : Entity("asset/ballTex.png", sf::Vector2f(400.f, 300.f),
                  sf::Vector2f(-200, 100), sf::Vector2f(10.f, 10.f)) {}
 
-    void move(sf::Time dt) override {
+    void move(const sf::Time& dt) override {
         bodySprite.move(velocity.x * dt.asSeconds(),
                         velocity.y * dt.asSeconds());
     };
