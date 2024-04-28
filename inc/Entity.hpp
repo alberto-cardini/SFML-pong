@@ -18,7 +18,7 @@ public:
         return getTransform().transformRect(bodySprite.getGlobalBounds());
     };
 
-    virtual void move(sf::Time deltaTime) = 0;
+    virtual void move(const sf::Time& deltaTime) = 0;
 
     void setVelocity(float x, float y) { velocity.x = x; velocity.y = y; }
 

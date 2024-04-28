@@ -9,7 +9,17 @@ sf::Time Game::spawnTime = sf::seconds(5);
 float Game::maxHeight = 150;  // counting 0 form the top
 float Game::minHeight = 450;
 
-Game::Game() {
+Game::Game()
+    :
+      //Entities
+      player(new User()),
+      ball(new Ball()),
+      //Time
+      dtClock(sf::Clock()),
+      gameClock(sf::Clock()),
+      spawnClock(sf::Clock()),
+      gameTime(sf::seconds(20)) {
+
     window =
         new sf::RenderWindow(sf::VideoMode(800, 600), "Pong", sf::Style::Close);
     window->setFramerateLimit(60);
@@ -48,16 +58,6 @@ Game::Game() {
 
     left.setPosition(147, 294);
     right.setPosition(653, 294);
-
-    // Entities
-    player = new User();
-    ball = new Ball();
-
-    // Time
-    dtClock = sf::Clock();
-    gameClock = sf::Clock();
-    spawnClock = sf::Clock();
-    gameTime = sf::seconds(20);
     // Game State
     gamePaused = false;
     gameOver = false;
@@ -92,10 +92,12 @@ void Game::render() {
 void Game::render_menu() { std::cout << gamePaused << std::endl; }
 
 void Game::update() {
-    if (gameClock.getElapsedTime().asSeconds() < gameTime.asSeconds() && !gamePaused) {
+    if (gameClock.getElapsedTime().asSeconds() < gameTime.asSeconds() &&
+        !gamePaused) {
         deltaTime = dtClock.restart();
         ball->move(deltaTime);
-        std::cout << ball->getPosition().x << " " << ball->getPosition().y << std::endl;
+        std::cout << ball->getPosition().x << " " << ball->getPosition().y
+                  << std::endl;
         hit();
         static long seed;
         seed = std::time(nullptr) + seed;
@@ -105,7 +107,8 @@ void Game::update() {
             spawnClock.restart();
             spawnObs();
         }
-    } else if (gameClock.getElapsedTime().asSeconds() > gameTime.asSeconds() || gamePaused) {
+    } else if (gameClock.getElapsedTime().asSeconds() > gameTime.asSeconds() ||
+               gamePaused) {
         gameClock.restart();
         restart();
     } else {
@@ -129,8 +132,8 @@ void Game::manageEvent() {
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        if (player->getPosition().y > maxHeight){
-            player->setVelocity(0,-5);
+        if (player->getPosition().y > maxHeight) {
+            player->setVelocity(0, -5);
             player->move(deltaTime);
         }
     }
@@ -172,7 +175,8 @@ void Game::hit() {  // remember that the y-axis is flipped, down is positive and
                     // up negative. x-axis is OK
 
     for (int i = 0; i < obs.size(); i++) {
-        if (ball->getGlobalBounds().intersects(obs[i]->getGlobalBounds())) {
+        if (ball->getGlobalBounds().intersects(
+                dynamic_cast<Obstacle*>(obs[i])->getGlobalBounds())) {
             ball->setVelocity(ball->getVelocity().x * (-1),
                               ball->getVelocity().y * (1));
             obs.erase(obs.end() - (obs.size() - i));
