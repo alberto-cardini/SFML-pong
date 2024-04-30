@@ -16,8 +16,6 @@ public:
         bodySprite.move(velocity.x, velocity.y);
     };
 
-    void move(float x, float y) { bodySprite.move(x, y); };
-
 private:
 };
 
