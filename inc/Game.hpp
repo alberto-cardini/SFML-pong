@@ -9,13 +9,14 @@
 #include "Obstacles.hpp"
 #include "User.hpp"
 #include "Entity.hpp"
+#include "HUD.hpp"
 
 class Game {
 public:
     Game();
 
     void render();
-    void renderHUD();
+    void updateHUD();
     void render_menu();
 
     void update();
@@ -30,24 +31,13 @@ private:
     Entity* player;
     Entity* ball;
     std::vector<Entity*> obs;
+    HUD *hud;
 
     static float maxHeight;  // counting 0 form the top
     static float minHeight;
     static sf::Time spawnTime;
     // Window
     sf::RenderWindow* window;
-    // HUD
-    sf::Text HUD;
-    sf::Font font;
-    // Border
-    sf::Sprite top;
-    sf::Sprite bot;
-    sf::Sprite right;
-    sf::Sprite left;
-
-    sf::Texture borderTex;
-    sf::Texture leftBorderTex;
-    sf::Texture rightBorderTex;
     // Time capture
     sf::Clock dtClock;
     sf::Clock gameClock;

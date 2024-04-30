@@ -10,81 +10,43 @@ float Game::maxHeight = 150;  // counting 0 form the top
 float Game::minHeight = 450;
 
 Game::Game()
-    :
-      //Entities
+    :  // Entities
       player(new User()),
       ball(new Ball()),
-      //Time
+      // HUD
+      hud(new HUD()),
+      // Window
+      window(new sf::RenderWindow(sf::VideoMode(800, 600), "Pong",
+                                  sf::Style::Close)),
+      //Game State
+      gamePaused(false),
+      gameOver(false),
+      // Time
       dtClock(sf::Clock()),
       gameClock(sf::Clock()),
       spawnClock(sf::Clock()),
       gameTime(sf::seconds(20)) {
 
-    window =
-        new sf::RenderWindow(sf::VideoMode(800, 600), "Pong", sf::Style::Close);
     window->setFramerateLimit(60);
-
-    // HUD
-    if (!font.loadFromFile("asset/OpenSans-Regular.ttf")) {
-        perror("Wrong working directory");
-    }
-
-    if (!borderTex.loadFromFile("asset/borderTex.png")) {
-        perror("Wrong working directory");
-    }
-    if (!leftBorderTex.loadFromFile("asset/leftBorderTex.png")) {
-        perror("Wrong working directory");
-    }
-    if (!rightBorderTex.loadFromFile("asset/rightBorderTex.png")) {
-        perror("Wrong working directory");
-    }
-    HUD.setFont(font);
-    HUD.setPosition(100, 50);
-
-    // Border
-    top.setTexture(borderTex);
-    bot.setTexture(borderTex);
-    left.setTexture(leftBorderTex);
-    right.setTexture(rightBorderTex);
-
-    top.setOrigin(250, 3);
-    bot.setOrigin(250, 3);
-
-    right.setOrigin(3, 200);
-    left.setOrigin(3, 200);
-
-    top.setPosition(400, 97);
-    bot.setPosition(400, 503);
-
-    left.setPosition(147, 294);
-    right.setPosition(653, 294);
-    // Game State
-    gamePaused = false;
-    gameOver = false;
 }
 
-void Game::renderHUD() {
+void Game::updateHUD() {
     sf::String string =
         "TIME LEFT: " +
         std::to_string(static_cast<int>(
             gameTime.asSeconds() - gameClock.getElapsedTime().asSeconds())) +
         " sec.";
-    HUD.setString(string);
-    window->draw(top);
-    window->draw(bot);
-    window->draw(right);
-    window->draw(left);
+    hud->setString(string);
 }
 
 void Game::render() {
     window->clear();
-    renderHUD();
-    window->draw(HUD);
+    window->draw(*hud);
+    window->draw(*hud);
     window->draw(*ball);
     window->draw(*player);
-    for (const Entity* n : obs) {
+    for (Entity* n : obs) {
         window->draw(*n);
-        // window.draw(n.timeGain);
     }
     window->display();
 }
@@ -94,10 +56,9 @@ void Game::render_menu() { std::cout << gamePaused << std::endl; }
 void Game::update() {
     if (gameClock.getElapsedTime().asSeconds() < gameTime.asSeconds() &&
         !gamePaused) {
+        updateHUD();
         deltaTime = dtClock.restart();
         ball->move(deltaTime);
-        std::cout << ball->getPosition().x << " " << ball->getPosition().y
-                  << std::endl;
         hit();
         static long seed;
         seed = std::time(nullptr) + seed;
@@ -112,7 +73,6 @@ void Game::update() {
         gameClock.restart();
         restart();
     } else {
-        std::cout << "paused" << std::endl;
     }
 }
 
@@ -190,23 +150,23 @@ void Game::hit() {  // remember that the y-axis is flipped, down is positive and
                           ball->getVelocity().y * (1));
     }
 
-    if (ball->getGlobalBounds().intersects(top.getGlobalBounds())) {
+    if (ball->getGlobalBounds().intersects(hud->getGlobalBounds(Top))) {
         ball->setVelocity(ball->getVelocity().x * (1),
                           ball->getVelocity().y * (-1));
     }
 
-    if (ball->getGlobalBounds().intersects(bot.getGlobalBounds())) {
+    if (ball->getGlobalBounds().intersects(hud->getGlobalBounds(Bot))) {
         ball->setVelocity(ball->getVelocity().x * (1),
                           ball->getVelocity().y * (-1));
     }
 
-    if (ball->getGlobalBounds().intersects(left.getGlobalBounds())) {
+    if (ball->getGlobalBounds().intersects(hud->getGlobalBounds(Left))) {
         ball->setVelocity(ball->getVelocity().x * (-1),
                           ball->getVelocity().y * (1));
         gameTime -= sf::seconds(3);
     }
 
-    if (ball->getGlobalBounds().intersects(right.getGlobalBounds())) {
+    if (ball->getGlobalBounds().intersects(hud->getGlobalBounds(Right))) {
         ball->setVelocity(ball->getVelocity().x * (-1),
                           ball->getVelocity().y * (1));
     }
