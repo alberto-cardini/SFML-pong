@@ -7,11 +7,13 @@
 
 #include "SFML/Graphics.hpp"
 
-class Entity : public sf::Drawable, public sf::Transformable {
+namespace objType {
+
+class Movable : public sf::Drawable, public sf::Transformable {
 public:
-    Entity();
-    Entity(const std::string& texturePath, sf::Vector2f pos,
-                    sf::Vector2f vel, sf::Vector2f origin);
+    Movable();
+    Movable(const sf::Texture* entityTex, sf::Vector2f pos, sf::Vector2f vel,
+            sf::Vector2f origin);
 
     const sf::FloatRect getGlobalBounds() {
         return getTransform().transformRect(bodySprite.getGlobalBounds());
@@ -40,7 +42,36 @@ private:
 protected:
     sf::Vector2f velocity;
     sf::Sprite bodySprite;
-    sf::Texture* bodyTex;
+    const sf::Texture* bodyTex;
 };
+
+class Immovable : public sf::Drawable, public sf::Transformable {
+public:
+    Immovable();
+
+    int getVertex() const { return vertex; }
+
+    const sf::FloatRect getGlobalBounds() {
+        return getTransform().transformRect(entity.getGlobalBounds());
+    };
+
+private:
+    virtual void draw(sf::RenderTarget& target,
+                      sf::RenderStates states) const override {
+        states.transform *= getTransform();
+        target.draw(entity, states);
+        target.draw(text, states);
+        //target.draw(bound, states);
+        //target.draw(textBound, states);
+    }
+
+    int vertex;
+    sf::RectangleShape bound;
+    sf::RectangleShape textBound;
+    sf::Text text;
+    sf::Font* font;
+    sf::CircleShape entity;
+};
+}  // namespace objType
 
 #endif  // SFML_PONG_ENTITY_HPP
