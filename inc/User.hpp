@@ -6,10 +6,10 @@
 
 #include "Entity.hpp"
 
-class User : public Entity {
+class User : public objType::Movable {
 public:
-    User()
-        : Entity("asset/playerTex.png", sf::Vector2f(150.f, 300.f),
+    explicit User(const sf::Texture* playerTex)
+        : objType::Movable(playerTex, sf::Vector2f(150.f, 300.f),
                  sf::Vector2f(0, 5), sf::Vector2f(0.f, 50.f)) {}
 
     void move(const sf::Time& deltaTime) override {

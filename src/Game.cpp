@@ -5,20 +5,21 @@
 
 #include <iostream>
 
+AssetManager* Game::assetManager = new AssetManager();
 sf::Time Game::spawnTime = sf::seconds(5);
 float Game::maxHeight = 150;  // counting 0 form the top
 float Game::minHeight = 450;
 
 Game::Game()
     :  // Entities
-      player(new User()),
-      ball(new Ball()),
+      player(new User(assetManager->getTexture("playerTex"))),
+      ball(new Ball(assetManager->getTexture("ballTex"))),
       // HUD
       hud(new HUD()),
       // Window
       window(new sf::RenderWindow(sf::VideoMode(800, 600), "Pong",
                                   sf::Style::Close)),
-      //Game State
+      // Game State
       gamePaused(false),
       gameOver(false),
       // Time
@@ -26,12 +27,11 @@ Game::Game()
       gameClock(sf::Clock()),
       spawnClock(sf::Clock()),
       gameTime(sf::seconds(20)) {
-
     window->setFramerateLimit(60);
 }
 
 void Game::updateHUD() {
-    sf::String string =
+    auto string =
         "TIME LEFT: " +
         std::to_string(static_cast<int>(
             gameTime.asSeconds() - gameClock.getElapsedTime().asSeconds())) +
@@ -45,7 +45,7 @@ void Game::render() {
     window->draw(*hud);
     window->draw(*ball);
     window->draw(*player);
-    for (Entity* n : obs) {
+    for (objType::Immovable* n : obs) {
         window->draw(*n);
     }
     window->display();
@@ -124,10 +124,11 @@ void Game::run() {
         update();
         render();
     }
+    delete assetManager;
 }
 
 void Game::spawnObs() {
-    Entity* newObs = new Obstacle();
+    auto* newObs = new objType::Immovable();
     obs.push_back(newObs);
 }
 
@@ -135,13 +136,11 @@ void Game::hit() {  // remember that the y-axis is flipped, down is positive and
                     // up negative. x-axis is OK
 
     for (int i = 0; i < obs.size(); i++) {
-        if (ball->getGlobalBounds().intersects(
-                dynamic_cast<Obstacle*>(obs[i])->getGlobalBounds())) {
+        if (ball->getGlobalBounds().intersects(obs[i]->getGlobalBounds())) {
             ball->setVelocity(ball->getVelocity().x * (-1),
                               ball->getVelocity().y * (1));
             obs.erase(obs.end() - (obs.size() - i));
-            gameTime +=
-                sf::seconds(dynamic_cast<Obstacle*>(obs[i])->getVertex());
+            gameTime += sf::seconds(obs[i]->getVertex());
         }
     }
 

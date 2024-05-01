@@ -7,10 +7,10 @@
 
 #include "Entity.hpp"
 
-class Ball : public Entity {
+class Ball : public objType::Movable {
 public:
-    Ball()
-        : Entity("asset/ballTex.png", sf::Vector2f(400.f, 300.f),
+    explicit Ball(const sf::Texture* ballTex)
+        : objType::Movable(ballTex, sf::Vector2f(400.f, 300.f),
                  sf::Vector2f(-200, 100), sf::Vector2f(10.f, 10.f)) {}
 
     void move(const sf::Time& dt) override {
