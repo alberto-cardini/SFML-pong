@@ -4,23 +4,14 @@
 
 #include "HUD.hpp"
 
-HUD::HUD()
-    : borderTex(new sf::Texture),
-      leftBorderTex(new sf::Texture),
-      rightBorderTex(new sf::Texture) {
-    if (!font.loadFromFile("asset/OpenSans-Regular.ttf")) {
-        perror("Wrong working directory");
-    }
-
-    if (!borderTex->loadFromFile("asset/borderTex.png")) {
-        perror("Wrong working directory");
-    }
-    if (!leftBorderTex->loadFromFile("asset/leftBorderTex.png")) {
-        perror("Wrong working directory");
-    }
-    if (!rightBorderTex->loadFromFile("asset/rightBorderTex.png")) {
-        perror("Wrong working directory");
-    }
+HUD::HUD(const sf::Texture& topTex, const sf::Texture& leftTex,
+         const sf::Texture& rightTex, const sf::Font& font)
+    :  // Texture
+      borderTex(new sf::Texture(topTex)),
+      leftBorderTex(new sf::Texture(leftTex)),
+      rightBorderTex(new sf::Texture(rightTex)),
+      // Font
+      font(new sf::Font(font)) {
     text.setFont(font);
     text.setPosition(100, 50);
     // Border
@@ -42,7 +33,7 @@ HUD::HUD()
     right.setPosition(653, 294);
 }
 
-const sf::FloatRect HUD::getGlobalBounds(const Side& side) {
+sf::FloatRect HUD::getGlobalBounds(const Side& side) {
     switch (side) {
         case Side::Top:
             return top.getGlobalBounds();

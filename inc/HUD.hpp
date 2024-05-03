@@ -7,15 +7,16 @@
 
 #include "SFML/Graphics.hpp"
 
-enum Side {Top, Bot, Left, Right};
+enum Side { Top, Bot, Left, Right };
 
 class HUD : public sf::Drawable, public sf::Transformable {
 public:
-    HUD();
+    HUD(const sf::Texture& borderTop, const sf::Texture& borderLeft,
+        const sf::Texture& borderRight, const sf::Font& font);
 
     void setString(const std::string& score) { text.setString(score); }
 
-    const sf::FloatRect getGlobalBounds(const Side& side);
+    sf::FloatRect getGlobalBounds(const Side& side);
 
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -28,7 +29,7 @@ private:
     }
 
 protected:
-    sf::Font font;
+    sf::Font* font;
     sf::Text text;
 
     // Border
@@ -37,9 +38,9 @@ protected:
     sf::Sprite right;
     sf::Sprite left;
 
-    sf::Texture* borderTex;
-    sf::Texture* leftBorderTex;
-    sf::Texture* rightBorderTex;
+    const sf::Texture* borderTex;
+    const sf::Texture* leftBorderTex;
+    const sf::Texture* rightBorderTex;
 };
 
 #endif  // SFML_PONG_HUD_HPP

@@ -8,7 +8,7 @@
 
 class User : public objType::Movable {
 public:
-    explicit User(const sf::Texture* playerTex)
+    explicit User(const sf::Texture& playerTex)
         : objType::Movable(playerTex, sf::Vector2f(150.f, 300.f),
                  sf::Vector2f(0, 5), sf::Vector2f(0.f, 50.f)) {}
 

@@ -11,8 +11,8 @@ namespace objType {
 
 class Movable : public sf::Drawable, public sf::Transformable {
 public:
-    Movable();
-    Movable(const sf::Texture* entityTex, sf::Vector2f pos, sf::Vector2f vel,
+    Movable() = default;
+    Movable(const sf::Texture& entityTex, sf::Vector2f pos, sf::Vector2f vel,
             sf::Vector2f origin);
 
     const sf::FloatRect getGlobalBounds() {
@@ -47,7 +47,7 @@ protected:
 
 class Immovable : public sf::Drawable, public sf::Transformable {
 public:
-    Immovable();
+    explicit Immovable(const sf::Font& timeFont);
 
     int getVertex() const { return vertex; }
 

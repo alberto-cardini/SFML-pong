@@ -15,7 +15,10 @@ Game::Game()
       player(new User(assetManager->getTexture("playerTex"))),
       ball(new Ball(assetManager->getTexture("ballTex"))),
       // HUD
-      hud(new HUD()),
+      hud(new HUD(assetManager->getTexture("borderTex"),
+                  assetManager->getTexture("leftBorderTex"),
+                  assetManager->getTexture("rightBorderTex"),
+                  assetManager->getFont("OpenSans-Regular"))),
       // Window
       window(new sf::RenderWindow(sf::VideoMode(800, 600), "Pong",
                                   sf::Style::Close)),
@@ -51,7 +54,8 @@ void Game::render() {
     window->display();
 }
 
-void Game::render_menu() { std::cout << gamePaused << std::endl; }
+void Game::render_menu() {
+    std::cout << gamePaused << std::endl; }
 
 void Game::update() {
     if (gameClock.getElapsedTime().asSeconds() < gameTime.asSeconds() &&
@@ -128,13 +132,12 @@ void Game::run() {
 }
 
 void Game::spawnObs() {
-    auto* newObs = new objType::Immovable();
+    auto* newObs = new objType::Immovable(assetManager->getFont("OpenSans-Regular"));
     obs.push_back(newObs);
 }
 
 void Game::hit() {  // remember that the y-axis is flipped, down is positive and
                     // up negative. x-axis is OK
-
     for (int i = 0; i < obs.size(); i++) {
         if (ball->getGlobalBounds().intersects(obs[i]->getGlobalBounds())) {
             ball->setVelocity(ball->getVelocity().x * (-1),

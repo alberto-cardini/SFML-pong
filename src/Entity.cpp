@@ -3,23 +3,19 @@
 //
 
 #include "Entity.hpp"
-#include "Game.hpp"
+#include <cmath>
 
-objType::Movable::Movable(const sf::Texture* entityTex, sf::Vector2f pos,
+objType::Movable::Movable(const sf::Texture& entityTex, sf::Vector2f pos,
                sf::Vector2f vel, sf::Vector2f origin)
-    : bodyTex(new sf::Texture()), velocity(vel) {
+    : bodyTex(new sf::Texture(entityTex)), velocity(vel) {
     // initialization on the heap to avoid memory leaks.
     // Otherwise, the texture pointer is lost
-    bodyTex = entityTex;
     bodySprite.setTexture(*bodyTex);
     bodySprite.setOrigin(origin);
     bodySprite.setPosition(pos);
 }
 
-objType::Immovable::Immovable() : font(new sf::Font()) {
-    if (!font->loadFromFile("asset/OpenSans-Regular.ttf")) {
-        perror("wrong file");
-    }
+objType::Immovable::Immovable(const sf::Font& timeFont) : font(new sf::Font(timeFont)) {
     text.setFont(*font);
     text.setCharacterSize(15);
     text.setOutlineThickness(2);
@@ -35,9 +31,9 @@ objType::Immovable::Immovable() : font(new sf::Font()) {
     // entity.setRotation(rand() % 360);
     // entity.setOrigin(radius/2, radius/2);
     entity.setPosition(x, y);
-
+/*
     bound = sf::RectangleShape(entity.getGlobalBounds().getSize());
-/*    bound.setOutlineColor(sf::Color::Red);
+    bound.setOutlineColor(sf::Color::Red);
     bound.setOutlineThickness(2);
     bound.setFillColor(sf::Color::Transparent);
     bound.setPosition(x, y);
