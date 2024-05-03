@@ -10,10 +10,12 @@
 class AssetManager {
 public:
     AssetManager();
-    static sf::Texture* getTexture(const std::string& filename);
+    static sf::Texture& getTexture(const std::string& filename);
+    static sf::Font& getFont(const std::string& filename);
 
 private:
     std::map<std::string, sf::Texture> textureMap;
+    std::map<std::string, sf::Font> fontMap;
     static AssetManager* assetManager;
 };
 

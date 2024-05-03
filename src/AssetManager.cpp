@@ -14,14 +14,26 @@ AssetManager::AssetManager() {
     assetManager = this;
 }
 
-sf::Texture* AssetManager::getTexture(const std::string& filename) {
+sf::Texture& AssetManager::getTexture(const std::string& filename) {
     auto& texMap = assetManager->textureMap;
     auto pairFound = texMap.find(filename);
     if (pairFound != texMap.end()) {
-        return &pairFound->second;
+        return pairFound->second;
     } else {
         auto& texture = texMap[filename];
         texture.loadFromFile("asset/" + filename + ".png");
-        return &texture;
+        return texture;
+    }
+}
+
+sf::Font& AssetManager::getFont(const std::string& filename) {
+    auto& texMap = assetManager->fontMap;
+    auto pairFound = texMap.find(filename);
+    if (pairFound != texMap.end()) {
+        return pairFound->second;
+    } else {
+        auto& font = texMap[filename];
+        font.loadFromFile("asset/" + filename + ".ttf");
+        return font;
     }
 }
