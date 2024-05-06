@@ -4,30 +4,19 @@
 #ifndef USER_hpp
 #define USER_hpp
 
-#include "Game.hpp"
-#include "SFML/Graphics/Rect.hpp"
-#include "SFML/System/Vector2.hpp"
-#include "SFML/Graphics/Texture.hpp"
-#include "SFML/Graphics/Sprite.hpp"
+#include "Entity.hpp"
 
-class User : public sf::Drawable, public sf::Transformable {
+class User : public objType::Movable {
 public:
-    User();
+    explicit User(const sf::Texture& playerTex)
+        : objType::Movable(playerTex, sf::Vector2f(150.f, 300.f),
+                 sf::Vector2f(0, 5), sf::Vector2f(0.f, 50.f)) {}
 
-    const sf::FloatRect getGlobalBounds() const {
-        return getTransform().transformRect(platform.getGlobalBounds());
-    }
+    void move(const sf::Time& deltaTime) override {
+        bodySprite.move(velocity.x, velocity.y);
+    };
 
 private:
-
-    sf::RectangleShape platform;
-
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
-    {
-        states.transform *= getTransform();
-        target.draw(platform, states);
-    }
-
 };
 
 #endif

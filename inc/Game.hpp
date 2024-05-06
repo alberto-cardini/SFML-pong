@@ -5,16 +5,19 @@
 #define GAME_hpp
 
 #include "Ball.hpp"
-#include "Obstacles.hpp"
+#include "Entity.hpp"
+#include "HUD.hpp"
 #include "SFML/Graphics.hpp"
 #include "User.hpp"
+#include "AssetManager.hpp"
 
 class Game {
 public:
     Game();
 
     void render();
-    void renderHUD();
+    void updateHUD();
+
     void update();
     void manageEvent();
     void run();
@@ -24,29 +27,27 @@ public:
     void spawnObs();
 
 private:
-    User player;
-    Ball ball;
-    std::vector<Obstacle> obs;
+    objType::Movable* player;
+    objType::Movable* ball;
+    std::vector<objType::Immovable*> obs;
+    HUD* hud;
 
-    static float maxHeight;  // counting 0 form the top
-    static float minHeight;
+    const static float MAX_HEIGHT;  // counting 0 form the top
+    const static float MIN_HEIGHT;
     static sf::Time spawnTime;
     // Window
-    sf::RenderWindow window;
-    // HUD
-    sf::Text HUD;
-    sf::Font font;
-    // Border
-    sf::RectangleShape top;
-    sf::RectangleShape bot;
-    sf::RectangleShape right;
-    sf::RectangleShape left;
-    // Time capture
+    sf::RenderWindow* window;
+    // Asset Manager
+    static AssetManager* assetManager;
+    //  Time capture
     sf::Clock dtClock;
     sf::Clock gameClock;
     sf::Clock spawnClock;
     sf::Time deltaTime;
     sf::Time gameTime;
+    // Game State
+    bool gamePaused;
+    bool gameOver;
 };
 
 #endif
