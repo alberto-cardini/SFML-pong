@@ -33,8 +33,8 @@ private:
     std::vector<objType::Immovable*> obs;
     HUD* hud;
 
-    static float maxHeight;  // counting 0 form the top
-    static float minHeight;
+    const static float MAX_HEIGHT;  // counting 0 form the top
+    const static float MIN_HEIGHT;
     static sf::Time spawnTime;
     // Window
     sf::RenderWindow* window;

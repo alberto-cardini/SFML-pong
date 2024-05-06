@@ -4,24 +4,24 @@
 #include "Game.hpp"
 
 #include <iostream>
-
 AssetManager* Game::assetManager = new AssetManager();
 sf::Time Game::spawnTime = sf::seconds(5);
-float Game::maxHeight = 150;  // counting 0 form the top
-float Game::minHeight = 450;
+const float Game::MAX_HEIGHT = 150;  // counting 0 form the top
+const float Game::MIN_HEIGHT = 450;
 
 Game::Game()
     :  // Entities
-      player(new User(assetManager->getTexture("playerTex"))),
-      ball(new Ball(assetManager->getTexture("ballTex"))),
+      player(new User(AssetManager::getTexture("playerTex"))),
+      ball(new Ball(AssetManager::getTexture("ballTex"))),
       // HUD
-      hud(new HUD(assetManager->getTexture("borderTex"),
-                  assetManager->getTexture("leftBorderTex"),
-                  assetManager->getTexture("rightBorderTex"),
-                  assetManager->getFont("OpenSans-Regular"))),
+      hud(new HUD(AssetManager::getTexture("borderTex"),
+                  AssetManager::getTexture("leftBorderTex"),
+                  AssetManager::getTexture("rightBorderTex"),
+                  AssetManager::getFont("OpenSans-Regular"))),
       // Window
       window(new sf::RenderWindow(sf::VideoMode(800, 600), "Pong",
                                   sf::Style::Close)),
+
       // Game State
       gamePaused(false),
       gameOver(false),
@@ -45,7 +45,6 @@ void Game::updateHUD() {
 void Game::render() {
     window->clear();
     window->draw(*hud);
-    window->draw(*hud);
     window->draw(*ball);
     window->draw(*player);
     for (objType::Immovable* n : obs) {
@@ -54,8 +53,7 @@ void Game::render() {
     window->display();
 }
 
-void Game::render_menu() {
-    std::cout << gamePaused << std::endl; }
+void Game::render_menu() { std::cout << gamePaused << std::endl; }
 
 void Game::update() {
     if (gameClock.getElapsedTime().asSeconds() < gameTime.asSeconds() &&
@@ -89,14 +87,15 @@ void Game::restart() {
 
 void Game::manageEvent() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        if (player->getPosition().y < minHeight) {
+        if (player->getPosition().y < MIN_HEIGHT) {
             player->setVelocity(0, 5);
             player->move(deltaTime);
         }
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        if (player->getPosition().y > maxHeight) {
+        if (player->getPosition().y > MAX_HEIGHT) {
+            std::cout << "y: " << player->getPosition().y << std::endl;
             player->setVelocity(0, -5);
             player->move(deltaTime);
         }
@@ -109,7 +108,7 @@ void Game::manageEvent() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) gamePaused = false;
     }
 
-    sf::Event event;
+    sf::Event event{};
     while (window->pollEvent(event)) {
         switch (event.type) {
             case sf::Event::Closed:
@@ -132,7 +131,8 @@ void Game::run() {
 }
 
 void Game::spawnObs() {
-    auto* newObs = new objType::Immovable(assetManager->getFont("OpenSans-Regular"));
+    auto* newObs =
+        new objType::Immovable(AssetManager::getFont("OpenSans-Regular"));
     obs.push_back(newObs);
 }
 
