@@ -6,6 +6,7 @@
 #define SFML_PONG_ENTITY_HPP
 
 #include "SFML/Graphics.hpp"
+#include <iostream>
 
 namespace objType {
 
@@ -28,9 +29,7 @@ public:
 
     const sf::Vector2f& getVelocity() const { return velocity; }
 
-    sf::Vector2f getPosition() { return bodySprite.getPosition(); }
-
-    void setPosition(float x, float y) { bodySprite.setPosition(x, y); }
+    const sf::Vector2f& getPosition() const { return bodySprite.getPosition(); }
 
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -45,24 +44,22 @@ protected:
     const sf::Texture* bodyTex;
 };
 
-class Immovable : public sf::Drawable, public sf::Transformable {
+class Immovable : public sf::Drawable {
 public:
+
+    Immovable() : vertex(0), font(nullptr) {}
     explicit Immovable(const sf::Font& timeFont);
 
     int getVertex() const { return vertex; }
 
-    const sf::FloatRect getGlobalBounds() {
-        return getTransform().transformRect(entity.getGlobalBounds());
-    };
+    sf::FloatRect getGlobalBounds() { return entity.getGlobalBounds(); }
 
 private:
-    virtual void draw(sf::RenderTarget& target,
-                      sf::RenderStates states) const override {
-        states.transform *= getTransform();
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
         target.draw(entity, states);
         target.draw(text, states);
-        //target.draw(bound, states);
-        //target.draw(textBound, states);
+        target.draw(bound, states);
+        target.draw(textBound, states);
     }
 
     int vertex;

@@ -28,11 +28,12 @@ objType::Immovable::Immovable(const sf::Font& timeFont) : font(new sf::Font(time
     entity = sf::CircleShape(radius, vertex);
     entity.setFillColor(
         sf::Color(10 + rand() % 244, 10 + rand() % 244, 10 + rand() % 244));
-    // entity.setRotation(rand() % 360);
+    //entity.setRotation(rand() % 360);
     // entity.setOrigin(radius/2, radius/2);
     entity.setPosition(x, y);
-/*
+
     bound = sf::RectangleShape(entity.getGlobalBounds().getSize());
+    /*
     bound.setOutlineColor(sf::Color::Red);
     bound.setOutlineThickness(2);
     bound.setFillColor(sf::Color::Transparent);
