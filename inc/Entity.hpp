@@ -6,7 +6,6 @@
 #define SFML_PONG_ENTITY_HPP
 
 #include "SFML/Graphics.hpp"
-#include <iostream>
 
 namespace objType {
 
@@ -58,8 +57,8 @@ private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
         target.draw(entity, states);
         target.draw(text, states);
-        target.draw(bound, states);
-        target.draw(textBound, states);
+        //target.draw(bound, states);
+        //target.draw(textBound, states);
     }
 
     int vertex;

@@ -11,7 +11,7 @@ class Ball : public objType::Movable {
 public:
     explicit Ball(const sf::Texture& ballTex)
         : objType::Movable(ballTex, sf::Vector2f(400.f, 300.f),
-                 sf::Vector2f(-200, 100), sf::Vector2f(10.f, 10.f)) {}
+                           sf::Vector2f(-200, 100), sf::Vector2f(10.f, 10.f)) {}
 
     void move(const sf::Time& dt) override {
         bodySprite.move(velocity.x * dt.asSeconds(),

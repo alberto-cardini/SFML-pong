@@ -3,7 +3,6 @@
 //
 #include "Game.hpp"
 
-#include <iostream>
 AssetManager* Game::assetManager = new AssetManager();
 sf::Time Game::spawnTime = sf::seconds(5);
 const float Game::MAX_HEIGHT = 150;  // counting 0 form the top
@@ -53,8 +52,6 @@ void Game::render() {
     window->display();
 }
 
-void Game::render_menu() { std::cout << gamePaused << std::endl; }
-
 void Game::update() {
     if (gameClock.getElapsedTime().asSeconds() < gameTime.asSeconds() &&
         !gamePaused) {
@@ -95,17 +92,9 @@ void Game::manageEvent() {
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         if (player->getPosition().y > MAX_HEIGHT) {
-            std::cout << "y: " << player->getPosition().y << std::endl;
             player->setVelocity(0, -5);
             player->move(deltaTime);
         }
-    }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) gamePaused = true;
-
-    while (gamePaused) {
-        render_menu();
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) gamePaused = false;
     }
 
     sf::Event event{};
