@@ -35,19 +35,10 @@ HUD::HUD(const sf::Texture& topTex, const sf::Texture& leftTex,
 
 sf::FloatRect HUD::getGlobalBounds(const Side& side) {
     switch (side) {
-        case Side::Top:
-            return top.getGlobalBounds();
-
-        case Side::Bot:
-            return bot.getGlobalBounds();
-
-        case Side::Left:
-            return left.getGlobalBounds();
-
-        case Side::Right:
-            return right.getGlobalBounds();
-
-        default:
-            break;
+        case Top:     return top.getGlobalBounds();
+        case Bot:     return bot.getGlobalBounds();
+        case Left:    return left.getGlobalBounds();
+        case Right:   return right.getGlobalBounds();
+        default:      break;
     }
 }

@@ -15,39 +15,43 @@ class Game {
 public:
     Game();
 
+    void run();
+private:
+
     void render();
     void updateHUD();
 
     void update();
     void manageEvent();
-    void run();
+
     void restart();
 
     void hit();
     void spawnObs();
 
-private:
-    objType::Movable* player;
-    objType::Movable* ball;
-    std::vector<objType::Immovable*> obs;
-    HUD* hud;
+    sf::Vector2f getNormalVector(Side side) const;
 
-    const static float MAX_HEIGHT;  // counting 0 form the top
-    const static float MIN_HEIGHT;
-    static sf::Time spawnTime;
+    Movable*                player;
+    Movable*                ball;
+    std::vector<Immovable*> obs;
+    HUD*                    hud;
+
+    const static float      MAX_HEIGHT;  // counting 0 form the top
+    const static float      MIN_HEIGHT;
+    static sf::Time         spawnTime;
     // Window
-    sf::RenderWindow* window;
+    sf::RenderWindow*       window;
     // Asset Manager
-    static AssetManager* assetManager;
+    static AssetManager*    assetManager;
     //  Time capture
-    sf::Clock dtClock;
-    sf::Clock gameClock;
-    sf::Clock spawnClock;
-    sf::Time deltaTime;
-    sf::Time gameTime;
+    sf::Clock               dtClock;
+    sf::Clock               gameClock;
+    sf::Clock               spawnClock;
+    sf::Time                deltaTime;
+    sf::Time                gameTime;
     // Game State
-    bool gamePaused;
-    bool gameOver;
+    bool                    gamePaused;
+    bool                    gameOver;
 };
 
 #endif

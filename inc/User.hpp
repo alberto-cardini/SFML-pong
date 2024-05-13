@@ -6,17 +6,18 @@
 
 #include "Entity.hpp"
 
-class User : public objType::Movable {
+class User : public Movable {
 public:
     explicit User(const sf::Texture& playerTex)
-        : objType::Movable(playerTex, sf::Vector2f(150.f, 300.f),
-                 sf::Vector2f(0, 5), sf::Vector2f(0.f, 50.f)) {}
+        : Movable{playerTex,
+                  {150.f, 300.f},
+                  {0, 5},
+                  {0.f, 50.f}} {}
 
     void move(const sf::Time& deltaTime) override {
-        bodySprite.move(velocity.x, velocity.y);
+        bodySprite.move(velocity.x,
+                        velocity.y);
     };
-
-private:
 };
 
 #endif

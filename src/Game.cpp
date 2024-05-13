@@ -2,6 +2,7 @@
 // Created by Alberto Cardini on 04/04/24.
 //
 #include "Game.hpp"
+#include <iostream>
 
 AssetManager* Game::assetManager = new AssetManager();
 sf::Time Game::spawnTime = sf::seconds(5);
@@ -10,33 +11,33 @@ const float Game::MIN_HEIGHT = 450;
 
 Game::Game()
     :  // Entities
-      player(new User(AssetManager::getTexture("playerTex"))),
-      ball(new Ball(AssetManager::getTexture("ballTex"))),
+      player        {new User{(AssetManager::getTexture("playerTex"))}},
+      ball          {new Ball{AssetManager::getTexture("ballTex")}},
       // HUD
-      hud(new HUD(AssetManager::getTexture("borderTex"),
-                  AssetManager::getTexture("leftBorderTex"),
-                  AssetManager::getTexture("rightBorderTex"),
-                  AssetManager::getFont("OpenSans-Regular"))),
+      hud           {new HUD{AssetManager::getTexture("borderTex"),
+                             AssetManager::getTexture("leftBorderTex"),
+                             AssetManager::getTexture("rightBorderTex"),
+                             AssetManager::getFont("OpenSans-Regular")}},
       // Window
-      window(new sf::RenderWindow(sf::VideoMode(800, 600), "Pong",
-                                  sf::Style::Close)),
+      window        {new sf::RenderWindow{sf::VideoMode(800,600),
+                                          "Pong",
+                                          sf::Style::Close}},
 
       // Game State
-      gamePaused(false),
-      gameOver(false),
+      gamePaused    {false},
+      gameOver      {false},
       // Time
-      dtClock(sf::Clock()),
-      gameClock(sf::Clock()),
-      spawnClock(sf::Clock()),
-      gameTime(sf::seconds(20)) {
+      dtClock       {sf::Clock()},
+      gameClock     {sf::Clock()},
+      spawnClock    {sf::Clock()},
+      gameTime      {sf::seconds(20)} {
     window->setFramerateLimit(60);
 }
 
 void Game::updateHUD() {
     auto string =
-        "TIME LEFT: " +
-        std::to_string(static_cast<int>(
-            gameTime.asSeconds() - gameClock.getElapsedTime().asSeconds())) +
+        "TIME LEFT: " + std::to_string(static_cast<int>(
+                            gameTime.asSeconds() - gameClock.getElapsedTime().asSeconds())) +
         " sec.";
     hud->setString(string);
 }
@@ -46,7 +47,7 @@ void Game::render() {
     window->draw(*hud);
     window->draw(*ball);
     window->draw(*player);
-    for (objType::Immovable* n : obs) {
+    for (Immovable* n : obs) {
         window->draw(*n);
     }
     window->display();
@@ -59,8 +60,7 @@ void Game::update() {
         deltaTime = dtClock.restart();
         ball->move(deltaTime);
         hit();
-        static long seed;
-        seed = std::time(nullptr) + seed;
+        static long seed{std::time(nullptr) + seed};
         srand(seed);
         if (static_cast<int>(spawnClock.getElapsedTime().asSeconds() -
                              spawnTime.asSeconds()) == 0) {
@@ -120,8 +120,7 @@ void Game::run() {
 }
 
 void Game::spawnObs() {
-    auto* newObs =
-        new objType::Immovable(AssetManager::getFont("OpenSans-Regular"));
+    auto* newObs = new Immovable(AssetManager::getFont("OpenSans-Regular"));
     obs.push_back(newObs);
 }
 
@@ -129,8 +128,13 @@ void Game::hit() {  // remember that the y-axis is flipped, down is positive and
                     // up negative. x-axis is OK
     for (int i = 0; i < obs.size(); i++) {
         if (ball->getGlobalBounds().intersects(obs[i]->getGlobalBounds())) {
-            ball->setVelocity(ball->getVelocity().x * (-1),
-                              ball->getVelocity().y * (1));
+            for (int j = 0; j < 3; ++j) {
+                std::cout << ball->getVelocity().x << ball->getVelocity().y << std::endl;/*
+                if (ball->getGlobalBounds().intersects(obs[i]->frame[j].frame.getGlobalBounds())) {
+                    ball->setVelocity(ball->getVelocity() * getNormalVector(obs[i]->frame[j].side));
+                    std::cout << "nel for" << std::endl;
+                }*/
+            }
             obs.erase(obs.end() - (obs.size() - i));
             gameTime += sf::seconds(obs[i]->getVertex());
         }
@@ -160,5 +164,15 @@ void Game::hit() {  // remember that the y-axis is flipped, down is positive and
     if (ball->getGlobalBounds().intersects(hud->getGlobalBounds(Right))) {
         ball->setVelocity(ball->getVelocity().x * (-1),
                           ball->getVelocity().y * (1));
+    }
+}
+
+sf::Vector2f Game::getNormalVector(Side side) const {
+    switch (side) {
+        case Top:   return sf::Vector2f(1,-1);
+        case Bot:   return sf::Vector2f(1,-1);
+        case Right: return sf::Vector2f(-1,1);
+        case Left:  return sf::Vector2f(-1,1);
+        default:    break;
     }
 }
